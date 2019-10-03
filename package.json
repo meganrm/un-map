@@ -24,6 +24,7 @@
     "history": "4.7.2",
     "html-webpack-plugin": "^2.30.1",
     "lodash": "^4.17.15",
+    "mapbox-gl": "^1.4.0",
     "moment": "^2.19.3",
     "node-sass": "^4.12.0",
     "prop-types": "^15.6.0",

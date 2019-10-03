@@ -2,14 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
   find,
-  filter,
 } from 'lodash';
 import geoViewport from '@mapbox/geo-viewport';
 import bboxes from '../data/bboxes';
 import Point from '../logics/features';
 import states from '../data/states';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
 
-import MapInset from '../components/MapInset';
 
 class MapView extends React.Component {
   constructor(props) {
@@ -27,13 +26,9 @@ class MapView extends React.Component {
     this.highlightDistrict = this.highlightDistrict.bind(this);
     this.districtSelect = this.districtSelect.bind(this);
     this.removeHighlights = this.removeHighlights.bind(this);
-    this.filterForStateInsets = this.filterForStateInsets.bind(this);
     this.insetOnClickEvent = this.insetOnClickEvent.bind(this);
     this.makeZoomToNationalButton = this.makeZoomToNationalButton.bind(this);
     this.state = {
-      alaskaItems: filter(this.props.items, { state: 'AK' }),
-      hawaiiItems: filter(this.props.items, { state: 'HI' }),
-      inset: !props.selectedUsState,
       popoverColor: 'popover-general-icon',
     };
   }
@@ -131,15 +126,6 @@ class MapView extends React.Component {
       onColorMapUpdate(colorMap);
     }
     return updatedObj;
-  }
-
-  filterForStateInsets(items) {
-    const alaskaItems = filter(items, { state: 'AK' });
-    const hawaiiItems = filter(items, { state: 'HI' });
-    this.setState({
-      alaskaItems,
-      hawaiiItems,
-    });
   }
 
   insetOnClickEvent(e) {
@@ -424,8 +410,8 @@ class MapView extends React.Component {
     const { type, searchType } = this.props;
 
     mapboxgl.accessToken =
-      'pk.eyJ1IjoibWF5YXlhaXIiLCJhIjoiY2phdWl3Y2dnNWM0djJxbzI2M3l6ZHpmNSJ9.m00H0mS_DpchMFMbQ72q2w';
-    const styleUrl = 'mapbox://styles/mayayair/cjd14wlhs0abt2sp8o10s64el';
+         'pk.eyJ1IjoieHJnbG9iYWwiLCJhIjoiY2swdndhc205MTNucTNtcXY5bTd3cXg5bCJ9.0GHuJbhIE_SBKoSLoDlI0w';
+    const styleUrl = 'mapbox://styles/xrglobal/ck0vwcghg055z1cmr22n4mmsm';
 
     this.map = new mapboxgl.Map({
       container: 'map',
@@ -456,66 +442,13 @@ class MapView extends React.Component {
   }
 
   render() {
-    const {
-      center,
-      colorMap,
-      district,
-      type,
-      filterByValue,
-      resetSelections,
-      searchByDistrict,
-      refcode,
-      setLatLng,
-      distance,
-      searchType,
-      searchByQueryString,
-      selectedUsState,
-    } = this.props;
 
     return (
       <React.Fragment>
         <div id="map" className={this.state.popoverColor}>
           <div className="map-overlay" id="legend">
-            <MapInset
-              items={this.state.alaskaItems}
-              selectedUsState={selectedUsState}
-              center={center}
-              stateName="AK"
-              colorMap={colorMap}
-              district={district}
-              type={type}
-              filterByValue={filterByValue}
-              resetSelections={resetSelections}
-              searchByDistrict={searchByDistrict}
-              refcode={refcode}
-              setLatLng={setLatLng}
-              distance={distance}
-              searchType={searchType}
-              searchByQueryString={searchByQueryString}
-              mapId="map-overlay-alaska"
-              bounds={[[-170.15625, 51.72702815704774], [-127.61718749999999, 71.85622888185527]]}
-            />
-            <MapInset
-              items={this.state.hawaiiItems}
-              selectedUsState={selectedUsState}
-              stateName="HI"
-              center={center}
-              colorMap={colorMap}
-              district={district}
-              type={type}
-              filterByValue={filterByValue}
-              resetSelections={resetSelections}
-              searchByDistrict={searchByDistrict}
-              refcode={refcode}
-              setLatLng={setLatLng}
-              distance={distance}
-              searchType={searchType}
-              searchByQueryString={searchByQueryString}
-              mapId="map-overlay-hawaii"
-              bounds={[
-                [-161.03759765625, 18.542116654448996],
-                [-154.22607421875, 22.573438264572406]]}
-            />
+  
+      
           </div>
         </div>
 

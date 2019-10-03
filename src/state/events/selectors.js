@@ -12,8 +12,6 @@ import {
   getFilterBy,
   getFilterValue,
   getFilters,
-  getDistrict,
-  getSelectedState,
 } from '../selections/selectors';
 
 export const getEvents = state => state.events.allEvents;
@@ -25,19 +23,9 @@ const getEventsFilteredByKeywordArray = createSelector(
   (allEvents, filterArray) => filter(allEvents, o => includes(filterArray, o.issueFocus)),
 );
 
-const getEventsInState = createSelector(
-  [getEventsFilteredByKeywordArray, getSelectedState],
-  (eventsFilteredByKeywords, usState) => {
-    if (!usState) {
-      return eventsFilteredByKeywords;
-    }
-    return eventsFilteredByKeywords.filter(currrentEvent => currrentEvent.state === usState);
-  },
-);
-
 export const getFilteredEvents = createSelector(
   [
-    getEventsInState,
+    getEventsFilteredByKeywordArray,
     getFilterBy,
     getFilterValue,
   ],
@@ -94,18 +82,3 @@ export const getVisbleEvents = createSelector(
   },
 );
 
-export const getEventsByDistrict = createSelector(
-  [
-    getFilteredEvents,
-    getDistrict,
-  ],
-  (
-    filteredEvents,
-    district,
-  ) => {
-    if (district.toString().length === 0) {
-      return filteredEvents;
-    }
-    return filter(filteredEvents, evnt => evnt.title.includes(`-${district.toString()})`) || evnt.title.includes('Senate'));
-  },
-);

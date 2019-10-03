@@ -3,6 +3,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { find } from 'lodash';
+import mapboxgl from 'mapbox-gl';
 
 import states from '../data/states';
 import {
@@ -258,15 +259,12 @@ const mapStateToProps = state => ({
   center: getLocation(state),
   colorMap: getColorMap(state),
   distance: getDistance(state),
-  district: getDistrict(state),
-  eventsByDistrict: getEventsByDistrict(state),
   filterBy: getFilterBy(state),
   filterValue: getFilterValue(state),
   filteredEvents: getFilteredEvents(state),
   issueFilters: getFilters(state),
   refcode: getRefCode(state),
   searchType: getSearchType(state),
-  selectedUsState: getSelectedState(state),
   visibleEvents: getVisbleEvents(state),
 });
 
@@ -277,14 +275,12 @@ const mapDispatchToProps = dispatch => ({
   resetSearchByZip: () => dispatch(selectionActions.resetSearchByZip()),
   resetSelections: () => dispatch(selectionActions.resetSelections()),
   resetSelectionsExceptState: () => dispatch(selectionActions.resetSelectionsExceptState()),
-  searchByDistrict: val => dispatch(selectionActions.searchByDistrict(val)),
   searchByQueryString: val => dispatch(selectionActions.searchByQueryString(val)),
   searchByZip: zipcode => dispatch(selectionActions.getLatLngFromZip(zipcode)),
   setFilters: filters => dispatch(selectionActions.setFilters(filters)),
   setInitialFilters: events => dispatch(selectionActions.setInitialFilters(events)),
   setLatLng: val => dispatch(selectionActions.setLatLng(val)),
   setRefCode: code => dispatch(selectionActions.setRefCode(code)),
-  setUsState: usState => dispatch(selectionActions.setUsState(usState)),
 });
 
 EventsDashboard.propTypes = {
