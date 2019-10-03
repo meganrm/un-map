@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {find,} from 'lodash';
+import { find  } from 'lodash';
 import geoViewport from '@mapbox/geo-viewport';
 import bboxes from '../data/bboxes';
 import Point from '../logics/features';
@@ -49,22 +49,17 @@ class MapView extends React.Component {
       this.map.setFilter('unclustered-point-selected', ['==', 'id', selectedItem ? selectedItem.id : false]);
     }
 
-    if (items.length !== this.props.items.length) {
-      this.updateData(items, 'events-points');
-      this.filterForStateInsets(items);
-    }
-
-
     if (center.LNG) {
-      if (this.state.inset === false) {
-        return this.map.fitBounds(this.map.getBounds());
-      }
+
       return this.map.flyTo({
         center: [Number(center.LNG), Number(center.LAT)],
         zoom: 9.52 - (distance * (4.7 / 450)),
       });
     }
-    return this.map.fitBounds([[-128.8, 23.6], [-65.4, 50.2]]);
+    return this.map.flyTo({
+      center: [-23.470570, 21.844138],
+      zoom: 1.35,
+    });
   }
 
   getColorForEvents(indEvent) {
@@ -186,55 +181,53 @@ class MapView extends React.Component {
     const { map } = this;
 
     map.on('click', (e) => {
-      const { searchType } = this.map.metadata;
-      if (searchType === 'proximity') {
-        // handle proximity
-        const points = map.queryRenderedFeatures(e.point, { layers: [`${type}-points`] });
-        // selected a marker
-        let formatLatLng;
-        if (points.length > 0) {
-          const point = points[0];
-          formatLatLng = {
-            LAT: point.geometry.coordinates[1].toString(),
-            LNG: point.geometry.coordinates[0].toString(),
-          };
-        } else {
-          formatLatLng = {
-            LAT: e.lngLat.lat.toString(),
-            LNG: e.lngLat.lng.toString(),
-          };
-        }
-        setLatLng(formatLatLng);
+      // handle proximity
+      const points = map.queryRenderedFeatures(e.point, { layers: ['events-points'] });
+      // selected a marker
+      let formatLatLng;
+      if (points.length > 0) {
+        const point = points[0];
+        formatLatLng = {
+          LAT: point.geometry.coordinates[1].toString(),
+          LNG: point.geometry.coordinates[0].toString(),
+        };
+      } else {
+        formatLatLng = {
+          LAT: e.lngLat.lat.toString(),
+          LNG: e.lngLat.lng.toString(),
+        };
       }
+      console.log(formatLatLng);
+      setLatLng(formatLatLng);
     });
   }
 
   addLayer(featuresHome) {
     this.map.addLayer({
-        id: 'events-points',
-        layout: {
-          'icon-allow-overlap': true,
-          'icon-ignore-placement': true,
-          'icon-image': '{icon}',
-          'icon-offset': {
-            base: 1,
-            stops: [
-              [0, [0, -15]],
-              [10, [0, -10]],
-              [12, [0, 0]],
-            ],
-          },
-          'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+      id: 'events-points',
+      layout: {
+        'icon-allow-overlap': true,
+        'icon-ignore-placement': true,
+        'icon-image': '{icon}',
+        'icon-offset': {
+          base: 1,
+          stops: [
+            [0, [0, -15]],
+            [10, [0, -10]],
+            [12, [0, 0]],
+          ],
         },
-        paint: {
-          'icon-opacity': 1,
-        },
-        source: {
-          data: featuresHome,
-          type: 'geojson',
-        },
-        type: 'symbol',
-      },);
+        'text-font': ['Open Sans Semibold', 'Arial Unicode MS Bold'],
+      },
+      paint: {
+        'icon-opacity': 1,
+      },
+      source: {
+        data: featuresHome,
+        type: 'geojson',
+      },
+      type: 'symbol',
+    } );
   }
 
   clusterData(featuresHome) {
@@ -260,13 +253,13 @@ class MapView extends React.Component {
       source: 'groups-points',
       type: 'circle',
     });
-
   }
 
   handleReset() {
     const {
       resetSelections,
     } = this.props;
+    console.log('reset')
     resetSelections();
   }
 
@@ -276,18 +269,16 @@ class MapView extends React.Component {
       selectedUsState,
     } = this.props;
     document.querySelector('.mapboxgl-ctrl-compass').remove();
-    if (document.querySelector('.mapboxgl-ctrl-usa')) {
-      document.querySelector('.mapboxgl-ctrl-usa').remove();
+    if (document.querySelector('.mapboxgl-ctrl-globe')) {
+      document.querySelector('.mapboxgl-ctrl-globe').remove();
     }
-    const usaButton = document.createElement('button');
-    usaButton.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-usa';
-    if (selectedUsState) {
-      usaButton.innerHTML = `<span>${selectedUsState}</span>`;
-    } else {
-      usaButton.innerHTML = '<span class="usa-icon"></span>';
-    }
-    usaButton.addEventListener('click', this.handleReset);
-    document.querySelector('.mapboxgl-ctrl-group').appendChild(usaButton);
+    const globeButton = document.createElement('button');
+    globeButton.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-globe';
+
+    globeButton.innerHTML = '<span class="globe-icon"></span>';
+    
+    globeButton.addEventListener('click', this.handleReset);
+    document.querySelector('.mapboxgl-ctrl-group').appendChild(globeButton);
   }
 
   initializeMap(featuresHome) {
@@ -316,6 +307,7 @@ class MapView extends React.Component {
       if (type === 'events') {
         this.addLayer(featuresHome);
         this.addPopups('events-points');
+        this.addClickListener();
         this.map.getSource('events-points').setData(featuresHome);
       } else {
         this.addPopups('unclustered-point');

@@ -60,22 +60,23 @@ export const getVisbleEvents = createSelector(
     if (!location.LAT) {
       return filteredEvents;
     }
+    console.log(location)
     const lookup = new LatLng(Number(location.LAT), Number(location.LNG));
     const maxMeters = maxDistance * 1609.34; // Convert miles to meters before filtering
     return filteredEvents.filter((currentEvent) => {
       const curDistance = computeDistanceBetween(
         lookup,
-        new LatLng(Number(currentEvent.latitude), Number(currentEvent.longitude)),
+        new LatLng(Number(currentEvent.lat), Number(currentEvent.lng)),
       );
       return curDistance < maxMeters;
     }).sort((a, b) => {
       const aDistance = computeDistanceBetween(
         lookup,
-        new LatLng(Number(a.latitude), Number(a.longitude)),
+        new LatLng(Number(a.lat), Number(a.lng)),
       );
       const bDistance = computeDistanceBetween(
         lookup,
-        new LatLng(Number(b.latitude), Number(b.longitude)),
+        new LatLng(Number(b.lat), Number(b.lng)),
       );
       return aDistance - bDistance;
     });

@@ -59,7 +59,7 @@ class TableCell extends React.Component {
         className={`event-cell ${iconName}`}
         key={`${item.id}`}
         title={item.title}
-        extra={[<a className="rsvp-button" target="_blank" href={`${item.rsvpHref}${refcode}`}>rsvp</a>]}
+        // extra={[<a className="rsvp-button" target="_blank" href={`${item.organizerContact}${refcode}`}>rsvp</a>]}
       >
         {item.host}
         <ul>

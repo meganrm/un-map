@@ -19,6 +19,9 @@
   .ant-card-head {
     background-color: $brand-primary;
   }
+  .event-cell {
+    @include cell($brand-primary);
+  }
 
   .other {
     @include cell($other);
