@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  find,
-} from 'lodash';
+import {find,} from 'lodash';
 import geoViewport from '@mapbox/geo-viewport';
 import bboxes from '../data/bboxes';
 import Point from '../logics/features';
@@ -23,10 +21,6 @@ class MapView extends React.Component {
     this.addClusterLayers = this.addClusterLayers.bind(this);
     this.handleReset = this.handleReset.bind(this);
     this.toggleFilters = this.toggleFilters.bind(this);
-    this.highlightDistrict = this.highlightDistrict.bind(this);
-    this.districtSelect = this.districtSelect.bind(this);
-    this.removeHighlights = this.removeHighlights.bind(this);
-    this.insetOnClickEvent = this.insetOnClickEvent.bind(this);
     this.makeZoomToNationalButton = this.makeZoomToNationalButton.bind(this);
     this.state = {
       popoverColor: 'popover-general-icon',
@@ -46,8 +40,6 @@ class MapView extends React.Component {
       filterByValue,
       distance,
       selectedItem,
-      selectedUsState,
-      district,
     } = nextProps;
     this.map.metadata = { searchType: nextProps.searchType };
 
@@ -62,29 +54,7 @@ class MapView extends React.Component {
       this.filterForStateInsets(items);
     }
 
-    if (filterByValue.state || selectedUsState) {
-      let bbname = selectedUsState || filterByValue.state[0].toUpperCase();
-      if (district) {
-        const zeros = '00';
-        const districtString = district.toString();
-        const districtPadded =
-          zeros.substring(0, zeros.length - districtString.length) +
-          districtString;
-        bbname = `${bbname}${districtPadded}`;
 
-        // highlight district
-        const stateFIPS = states.find(cur => cur.USPS === bbname) ? states.find(cur => cur.USPS === bbname).FIPS : '';
-        const geoID = `${stateFIPS}${districtPadded}`;
-        const selectObj = {
-          district: districtPadded,
-          geoID,
-          state: filterByValue.state[0],
-        };
-        this.districtSelect(selectObj);
-      }
-      const stateBB = bboxes[bbname];
-      return this.focusMap(stateBB);
-    }
     if (center.LNG) {
       if (this.state.inset === false) {
         return this.map.fitBounds(this.map.getBounds());
@@ -115,7 +85,7 @@ class MapView extends React.Component {
         colorObj = {
           color: '#6C9FC2',
           filterBy: indEvent.issueFocus,
-          icon: 'general',
+          icon: 'marker-11',
         };
         colorMap.push(colorObj);
         updatedObj = {
@@ -126,15 +96,6 @@ class MapView extends React.Component {
       onColorMapUpdate(colorMap);
     }
     return updatedObj;
-  }
-
-  insetOnClickEvent(e) {
-    this.setState({ inset: false });
-    const dataBounds = e.target.parentNode.parentNode.getAttribute('data-bounds').split(',');
-    const boundsOne = [Number(dataBounds[0]), Number(dataBounds[1])];
-    const boundsTwo = [Number(dataBounds[2]), Number(dataBounds[3])];
-    const bounds = boundsOne.concat(boundsTwo);
-    this.map.fitBounds(bounds);
   }
 
   focusMap(bb) {
@@ -212,45 +173,14 @@ class MapView extends React.Component {
     });
   }
 
-  districtSelect(feature) {
-    if (feature.state) {
-      this.highlightDistrict(feature.geoID);
-    } else {
-      const visibility = this.map.getLayoutProperty('selected-fill', 'visibility');
-      if (visibility === 'visible') {
-        this.map.setLayoutProperty('selected-fill', 'visibility', 'none');
-        this.map.setLayoutProperty('selected-border', 'visibility', 'none');
-      }
-    }
-  }
-
   toggleFilters(layer, filterSettings) {
     this.map.setFilter(layer, filterSettings);
     this.map.setLayoutProperty(layer, 'visibility', 'visible');
   }
 
-  // Handles the highlight for districts when clicked on.
-  highlightDistrict(geoid) {
-    let filterSettings;
-    // Filter for which district has been selected.
-    if (typeof geoid === 'object') {
-      filterSettings = ['any'];
-
-      geoid.forEach((i) => {
-        filterSettings.push(['==', 'GEOID', i]);
-      });
-    } else {
-      filterSettings = ['all', ['==', 'GEOID', geoid]];
-    }
-    // Set that layer filter to the selected
-    this.toggleFilters('selected-fill', filterSettings);
-    this.toggleFilters('selected-border', filterSettings);
-  }
-
   addClickListener() {
     const {
       type,
-      searchByDistrict,
       setLatLng,
     } = this.props;
     const { map } = this;
@@ -275,32 +205,12 @@ class MapView extends React.Component {
           };
         }
         setLatLng(formatLatLng);
-      } else if (searchType === 'district') {
-        const features = map.queryRenderedFeatures(
-          e.point,
-          {
-            layers: ['district_interactive'],
-          },
-        );
-        const feature = {};
-
-        if (features.length > 0) {
-          feature.state = features[0].properties.ABR;
-          feature.district = features[0].properties.GEOID.substring(2, 4);
-          feature.geoID = features[0].properties.GEOID;
-
-          searchByDistrict({
-            district: Number(feature.district),
-            state: feature.state,
-          });
-        }
       }
     });
   }
 
   addLayer(featuresHome) {
-    this.map.addLayer(
-      {
+    this.map.addLayer({
         id: 'events-points',
         layout: {
           'icon-allow-overlap': true,
@@ -324,9 +234,7 @@ class MapView extends React.Component {
           type: 'geojson',
         },
         type: 'symbol',
-      },
-      'district_interactive',
-    );
+      },);
   }
 
   clusterData(featuresHome) {
@@ -353,37 +261,13 @@ class MapView extends React.Component {
       type: 'circle',
     });
 
-    // Layer to highlight selected group
-    this.map.addLayer({
-      filter: ['==', 'id', false],
-      id: 'unclustered-point-selected',
-      paint: {
-        'circle-color': '#f00',
-        'circle-opacity': 1,
-        'circle-radius': 6,
-        'circle-stroke-color': '#fff',
-        'circle-stroke-width': 2,
-      },
-      source: 'groups-points',
-      type: 'circle',
-    });
-  }
-
-  removeHighlights() {
-    this.map.setLayoutProperty('selected-fill', 'visibility', 'none');
-    this.map.setLayoutProperty('selected-border', 'visibility', 'none');
   }
 
   handleReset() {
     const {
-      selectedUsState,
       resetSelections,
     } = this.props;
-    this.removeHighlights();
     resetSelections();
-    if (!selectedUsState) {
-      this.setState({ inset: true });
-    }
   }
 
   // Creates the button in our zoom controls to go to the national view
@@ -442,14 +326,10 @@ class MapView extends React.Component {
   }
 
   render() {
-
     return (
       <React.Fragment>
         <div id="map" className={this.state.popoverColor}>
-          <div className="map-overlay" id="legend">
-  
-      
-          </div>
+          <div className="map-overlay" id="legend" />
         </div>
 
       </React.Fragment>
@@ -461,7 +341,6 @@ MapView.propTypes = {
   center: PropTypes.shape({ LAT: PropTypes.string, LNG: PropTypes.string, ZIP: PropTypes.string }),
   colorMap: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   distance: PropTypes.number,
-  district: PropTypes.number,
   filterByValue: PropTypes.shape({}),
   items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onColorMapUpdate: PropTypes.func.isRequired,
@@ -479,7 +358,6 @@ MapView.propTypes = {
 MapView.defaultProps = {
   center: {},
   distance: 50,
-  district: NaN,
   filterByValue: {},
   refcode: '',
   searchType: 'proximity',

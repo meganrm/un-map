@@ -41,23 +41,6 @@ class TableCell extends React.Component {
     }
   }
 
-  static makeDisplayName(item) {
-    if (item.campaignNo === '19') {
-      if (item.actionGroupName &&
-        item.actionHostName &&
-        item.actionGroupName === item.actionHostName) {
-        return item.actionGroupName;
-      } else if (item.actionGroupName && item.actionHostName) {
-        return `${item.actionGroupName} and ${item.actionHostName}`;
-      } else if (item.actionGroupName) {
-        return item.actionGroupName;
-      } else if (item.actionHostName) {
-        return item.actionHostName;
-      }
-    }
-    return item.group_name;
-  }
-
   constructor(props) {
     super(props);
     this.renderGroups = this.renderGroups.bind(this);
@@ -70,8 +53,6 @@ class TableCell extends React.Component {
       item,
       refcode,
     } = this.props;
-    const displayName = TableCell.makeDisplayName(item);
-    const groupName = displayName ? (<h4 className="event-host semi-bold">Hosted by {displayName}</h4>) : '';
     const eventType = item.eventType ? (<li>Event Type: {item.eventType}</li>) : '';
     return (
       <Card
@@ -80,17 +61,15 @@ class TableCell extends React.Component {
         title={item.title}
         extra={[<a className="rsvp-button" target="_blank" href={`${item.rsvpHref}${refcode}`}>rsvp</a>]}
       >
-        {groupName}
+        {item.host}
         <ul>
           {eventType}
           <li>Event Focus: {item.issueFocus}</li>
         </ul>
         <ul>
-          <li className="semi-bold">{moment(item.starts_at).format('MMMM Do, YYYY')}</li>
-          <li className="semi-bold">{moment(item.starts_at).format('h:mm A')}</li>
-          <li>{item.address1}</li>
-          <li>{item.city}</li>
-          <li>{item.state}, {item.zip}</li>
+          <li className="semi-bold">{moment(item.timeStart).format('MMMM Do, YYYY')}</li>
+          <li className="semi-bold">{moment(item.timeStart).format('h:mm A')}</li>
+          <li>{item.address}</li>
           <li className="read-more closed" onClick={TableCell.handlePanelOpen} id={item.id}>
             {item.public_description}
           </li>

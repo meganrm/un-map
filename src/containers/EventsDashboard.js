@@ -235,18 +235,21 @@ class EventsDashboard extends React.Component {
       <div className="events-container main-container">
         <h2 className="dash-title">Event Dashboard</h2>
         <SearchBar items={searchTypeMapSideBar[searchType]} mapType="event" />
-        <SideBar
-          renderTotal={this.renderTotal}
-          colorMap={colorMap}
-          items={searchTypeMapSideBar[searchType]}
-          allItems={allEvents}
-          refcode={refcode}
-          type="events"
-          resetSelections={resetSelections}
-          filterBy={filterBy}
-          location={center}
-        />
-        {this.renderMap()}
+        <div className="map-and-events-container">
+          <SideBar
+            renderTotal={this.renderTotal}
+            colorMap={colorMap}
+            items={searchTypeMapSideBar[searchType]}
+            allItems={allEvents}
+            refcode={refcode}
+            type="events"
+            resetSelections={resetSelections}
+            filterBy={filterBy}
+            location={center}
+          />
+          <div className="side-bar-background"></div>
+          {this.renderMap()}
+        </div>
         <div className="footer" />
       </div>
 

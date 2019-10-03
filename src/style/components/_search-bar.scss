@@ -1,5 +1,6 @@
 .search-bar {
   flex: 1 100%;
+  height: 65px;
   @include box-3d;
   z-index: 99;
   padding: 0.5vw;
