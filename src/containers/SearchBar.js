@@ -69,30 +69,19 @@ class SearchBar extends React.Component {
       resetSearchByZip,
       resetSearchByQueryString,
       searchType,
+      searchByAddress,
       searchByZip,
       searchByQueryString,
     } = this.props;
 
     resetSearchByQueryString();
-
+    console.log(query);
     if (!query) {
       return resetSelections();
     }
-    if (searchType === 'proximity') {
-      if (SearchBar.isZipCode(query)) {
-        return searchByZip(value);
-      }
-      if (SearchBar.isState(query)) {
-        resetSearchByZip();
-        return searchByQueryString({ filterBy: 'state', filterValue: SearchBar.isState(query).USPS });
-      }
-      const filterBy = mapType === 'group' ? 'name' : 'title';
-      return searchByQueryString({
-        filterBy,
-        filterValue: query,
-      });
-    }
-    return resetSelections();
+    searchByAddress({
+      query,
+    });
   }
 
   distanceHandler(value) {
@@ -106,11 +95,8 @@ class SearchBar extends React.Component {
       onFilterChanged,
       selectedFilters,
       colorMap,
-      mapType,
     } = this.props;
-    if (mapType === 'group') {
-      return null;
-    }
+
     return (
       <div className="input-group-filters">
         <IssueFilterTags
@@ -141,7 +127,7 @@ class SearchBar extends React.Component {
           changeHandler={this.distanceHandler}
           distance={distance}
           hidden={searchType === 'district'}
-          />
+        />
         {this.renderFilterBar()}
       </div>
     );
@@ -166,7 +152,7 @@ const mapDispatchToProps = dispatch => ({
   resetSelections: () => dispatch(selectionActions.resetSelections()),
   searchByDistrict: district => dispatch(selectionActions.searchByDistrict(district)),
   searchByQueryString: val => dispatch(selectionActions.searchByQueryString(val)),
-  searchByZip: zipcode => dispatch(selectionActions.getLatLngFromZip(zipcode)),
+  searchByAddress: zipcode => dispatch(selectionActions.getLatandLngFromSearch(zipcode)),
   searchHandler: (query, searchType, mapType) => (
     dispatch(selectionActions.searchHandler(query, searchType, mapType))),
   setDistance: distance => dispatch(selectionActions.setDistance(distance)),
@@ -192,7 +178,7 @@ SearchBar.propTypes = {
 };
 
 SearchBar.defaultProps = {
-  searchType: 'proximity'
+  searchType: 'proximity',
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);

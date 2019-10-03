@@ -74,3 +74,30 @@ export const getLatLngFromZip = payload => (dispatch) => {
     })
     .catch();
 };
+
+export const getLatandLngFromSearch = payload => (dispatch) => {
+  if (!payload.query) {
+    return dispatch(setLatLng({}));
+  }
+  const addressQuery = escape(payload.query);
+  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressQuery}&key=AIzaSyDP8q2OVisSLyFyOUU6OTgGjNNQCq7Q3rE`;
+  return superagent
+    .get(url)
+    .then((returned) => {
+      const {
+        results,
+      } = returned.body;
+      if (results && results.length) {
+        const data = results[0];
+        const newLatLng = {
+          lat: data.geometry.location.lat,
+          lng: data.geometry.location.lng,
+        };
+        //  this.address = data.formatted_address;
+        console.log(newLatLng)
+        return dispatch(setLatLng(newLatLng));
+      }
+      return dispatch(setLatLng({}));
+
+    });
+};

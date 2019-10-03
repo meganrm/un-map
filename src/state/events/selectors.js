@@ -57,11 +57,10 @@ export const getVisbleEvents = createSelector(
     maxDistance,
     location,
   ) => {
-    if (!location.LAT) {
+    if (!location.lat) {
       return filteredEvents;
     }
-    console.log(location)
-    const lookup = new LatLng(Number(location.LAT), Number(location.LNG));
+    const lookup = new LatLng(Number(location.lat), Number(location.lng));
     const maxMeters = maxDistance * 1609.34; // Convert miles to meters before filtering
     return filteredEvents.filter((currentEvent) => {
       const curDistance = computeDistanceBetween(

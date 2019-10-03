@@ -16,9 +16,6 @@ class SideBar extends React.Component {
       filterBy,
       type,
     } = this.props;
-    if ((type === 'groups') && (!location.LAT) && (filterBy === 'all')) {
-      return false;
-    }
     return true;
   }
 

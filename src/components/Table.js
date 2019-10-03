@@ -48,8 +48,7 @@ class Table extends React.Component {
     if (items.length === 0 && type === 'events') {
       return (
         <div id="events-list">
-          <p className="no-results">Looks like there are no events near you right now. You can create your own
-            <a href="https://act.impeachmentaugust.org/event/register-impeachment-august/create/" target="_blank"> here.</a>
+          <p className="no-results">Looks like there are no events near you right now.
           </p>
         </div>
       );

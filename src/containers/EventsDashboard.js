@@ -105,7 +105,7 @@ class EventsDashboard extends React.Component {
       resetSearchByZip,
       resetSearchByQueryString,
       searchType,
-      searchByZip,
+      searchByAddress,
       searchByQueryString,
       searchByDistrict,
     } = this.props;
@@ -279,7 +279,7 @@ const mapDispatchToProps = dispatch => ({
   resetSelections: () => dispatch(selectionActions.resetSelections()),
   resetSelectionsExceptState: () => dispatch(selectionActions.resetSelectionsExceptState()),
   searchByQueryString: val => dispatch(selectionActions.searchByQueryString(val)),
-  searchByZip: zipcode => dispatch(selectionActions.getLatLngFromZip(zipcode)),
+  searchByAddress: zipcode => dispatch(selectionActions.getLatandLngFromSearch(zipcode)),
   setFilters: filters => dispatch(selectionActions.setFilters(filters)),
   setInitialFilters: events => dispatch(selectionActions.setInitialFilters(events)),
   setLatLng: val => dispatch(selectionActions.setLatLng(val)),
@@ -288,7 +288,7 @@ const mapDispatchToProps = dispatch => ({
 
 EventsDashboard.propTypes = {
   allEvents: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  center: PropTypes.shape({ LAT: PropTypes.string, LNG: PropTypes.string, ZIP: PropTypes.string }),
+  center: PropTypes.shape({ lat: PropTypes.string, lng: PropTypes.string, ZIP: PropTypes.string }),
   colorMap: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   distance: PropTypes.number.isRequired,
   district: PropTypes.number,

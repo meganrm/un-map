@@ -49,10 +49,10 @@ class MapView extends React.Component {
       this.map.setFilter('unclustered-point-selected', ['==', 'id', selectedItem ? selectedItem.id : false]);
     }
 
-    if (center.LNG) {
+    if (center.lng) {
 
       return this.map.flyTo({
-        center: [Number(center.LNG), Number(center.LAT)],
+        center: [Number(center.lng), Number(center.lat)],
         zoom: 9.52 - (distance * (4.7 / 450)),
       });
     }
@@ -188,16 +188,15 @@ class MapView extends React.Component {
       if (points.length > 0) {
         const point = points[0];
         formatLatLng = {
-          LAT: point.geometry.coordinates[1].toString(),
-          LNG: point.geometry.coordinates[0].toString(),
+          lat: point.geometry.coordinates[1].toString(),
+          lng: point.geometry.coordinates[0].toString(),
         };
       } else {
         formatLatLng = {
-          LAT: e.lngLat.lat.toString(),
-          LNG: e.lngLat.lng.toString(),
+          lat: e.lngLat.lat.toString(),
+          lng: e.lngLat.lng.toString(),
         };
       }
-      console.log(formatLatLng);
       setLatLng(formatLatLng);
     });
   }
@@ -330,7 +329,7 @@ class MapView extends React.Component {
 }
 
 MapView.propTypes = {
-  center: PropTypes.shape({ LAT: PropTypes.string, LNG: PropTypes.string, ZIP: PropTypes.string }),
+  center: PropTypes.shape({ lat: PropTypes.string, lng: PropTypes.string, ZIP: PropTypes.string }),
   colorMap: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   distance: PropTypes.number,
   filterByValue: PropTypes.shape({}),
