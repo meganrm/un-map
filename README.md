@@ -1,1 +1,1 @@
-# global-xr-map
+# indivisible-map
