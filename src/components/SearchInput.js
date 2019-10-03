@@ -23,17 +23,9 @@ class SearchBar extends React.Component {
   }
 
   render() {
-    const {
-      searchType,
-      mapType,
-    } = this.props;
-    const textMap = {
-      district: 'district, ex WA-09',
-      proximity: `zipcode, state, or ${mapType} name`,
-    };
     return (
       <Search
-        placeholder={textMap[searchType]}
+        placeholder={'search by address'}
         onSearch={value => this.handleSubmit(value)}
       />
     );

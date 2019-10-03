@@ -258,7 +258,6 @@ class MapView extends React.Component {
     const {
       resetSelections,
     } = this.props;
-    console.log('reset')
     resetSelections();
   }
 

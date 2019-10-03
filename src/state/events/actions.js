@@ -25,7 +25,6 @@ export const startSetEvents = () => (dispatch) => {
   const url = `${eventsUrl}/events.json`;
   return getData(url).then((result) => {
     const allevents = result.body;
-    console.log(allevents)
     const events = Object.keys(allevents)
       .map(id => new GlobalXrEvent(allevents[id]))
       // .filter(event => moment(event.starts_at).isAfter())

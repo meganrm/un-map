@@ -1,5 +1,5 @@
 {
-  "name": "impeachment-inquiry-map",
+  "name": "global-xr-map",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -72,12 +72,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/indivisible-org/impeachment-inquiry-map.git"
+    "url": "git+https://github.com/townhallproject/global-xr-map.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/indivisible-org/impeachment-inquiry-map/issues"
+    "url": "https://github.com/townhallproject/global-xr-map/issues"
   },
-  "homepage": "https://meganrm.github.io/impeachment-inquiry-map/"
+  "homepage": "https://github.com/townhallproject/global-xr-map"
 }

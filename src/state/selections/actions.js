@@ -94,7 +94,6 @@ export const getLatandLngFromSearch = payload => (dispatch) => {
           lng: data.geometry.location.lng,
         };
         //  this.address = data.formatted_address;
-        console.log(newLatLng)
         return dispatch(setLatLng(newLatLng));
       }
       return dispatch(setLatLng({}));
