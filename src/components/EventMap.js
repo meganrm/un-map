@@ -50,10 +50,9 @@ class MapView extends React.Component {
     }
 
     if (center.lng) {
-
       return this.map.flyTo({
         center: [Number(center.lng), Number(center.lat)],
-        zoom: 9.52 - (distance * (4.7 / 450)),
+        zoom: 5.52,
       });
     }
     return this.map.flyTo({
@@ -175,7 +174,6 @@ class MapView extends React.Component {
 
   addClickListener() {
     const {
-      type,
       setLatLng,
     } = this.props;
     const { map } = this;
