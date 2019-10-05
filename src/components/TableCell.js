@@ -1,15 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import superagent from 'superagent';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 
 import faFacebookSquare from '@fortawesome/fontawesome-free-brands/faFacebookSquare';
 import faTwitterSquare from '@fortawesome/fontawesome-free-brands/faTwitterSquare';
 import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope';
 import faExternalLinkSquareAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkSquareAlt';
-import { Card } from 'antd';
+import {
+  Card,
+  Icon,
+  Typography,
+} from 'antd';
 import { indivisibleUrl } from '../state/constants';
+
+const {
+  Paragraph
+} = Typography;
 
 /* eslint-disable */
 require('style-loader!css-loader!antd/es/card/style/index.css');
@@ -43,7 +51,6 @@ class TableCell extends React.Component {
 
   constructor(props) {
     super(props);
-    this.renderGroups = this.renderGroups.bind(this);
     this.renderEvents = this.renderEvents.bind(this);
   }
 
@@ -53,98 +60,43 @@ class TableCell extends React.Component {
       item,
       refcode,
     } = this.props;
-    const eventType = item.eventType ? (<li>Event Type: {item.eventType}</li>) : '';
+    const actions = [];
+    if (item.url) {
+      actions.push((<Icon type="link" key="setting" href={item.url}/>));
+    }
+    if (item.organizerContact) {
+      actions.push((<Icon type="mail" key="edit" />));
+    }
+    const startTime = item.zoneName ? moment(item.timeStart).tz(item.zoneName).format('h:mm A z') : moment(item.timeStart).format('h:mm A z');
     return (
       <Card
         className={`event-cell ${iconName}`}
         key={`${item.id}`}
         title={item.title}
-        // extra={[<a className="rsvp-button" target="_blank" href={`${item.organizerContact}${refcode}`}>rsvp</a>]}
+        cover={item.photo && (<img alt="event-logo" src={item.photo} />)}
+        actions={actions}
       >
         {item.host}
         <ul>
-          {eventType}
-          <li>Event Focus: {item.issueFocus}</li>
+          {item.eventType}
         </ul>
         <ul>
           <li className="semi-bold">{moment(item.timeStart).format('MMMM Do, YYYY')}</li>
-          <li className="semi-bold">{moment(item.timeStart).format('h:mm A')}</li>
+          <li className="semi-bold">{startTime}</li>
           <li>{item.address}</li>
-          <li className="read-more closed" onClick={TableCell.handlePanelOpen} id={item.id}>
-            {item.public_description}
-          </li>
         </ul>
+        <Card.Meta 
+          title={item.title} 
+          description={
+            <Paragraph ellipsis={{ rows: 3, expandable: true }}>
+              {item.description}
+            </Paragraph>
+            }
+          />
+
       </Card>);
   }
 
-  renderGroups() {
-    const { item, selectItem } = this.props;
-    let iconsSocial = [];
-    if (item.socials) {
-      iconsSocial = item.socials.reduce((acc, ele) => {
-        if (ele.category === 'facebook') {
-          acc.push(
-            <li key={ele.url}>
-              <a href={ele.url} target="_blank">
-                <FontAwesomeIcon icon={faFacebookSquare} />
-                <span className="connect-text">connect via facebook</span>
-              </a>
-            </li>);
-        }
-        if (ele.category === 'twitter') {
-          acc.push(
-            <li key={ele.url}>
-              <a href={ele.url} target="_blank">
-                <FontAwesomeIcon icon={faTwitterSquare} />
-                <span className="connect-text">connect via twitter</span>
-              </a>
-            </li>);
-        }
-        return acc;
-      }, []);
-    }
-    if (item.email) {
-      iconsSocial.push(
-        <React.Fragment>
-          <li key={item.id} >
-            <a onClick={TableCell.getEmail} id={item.id}>
-              <FontAwesomeIcon
-                icon={faEnvelope}
-              />
-              <span id={item.id} className="connect-text">connect via email</span>
-            </a>
-          </li>
-          <li>
-            <a className="email-link" id={`${item.id}-target`} href="" />
-          </li>
-        </React.Fragment>);
-    }
-    if (item.url) {
-      iconsSocial.push(
-        <li key={item.url}>
-          <a href={item.url} target="_blank">
-            <FontAwesomeIcon icon={faExternalLinkSquareAlt} />
-            <span className="connect-text">visit website</span>
-          </a>
-        </li>)
-    }
-    return (
-      <div onMouseEnter={() => selectItem(item)} onMouseLeave={() => selectItem(null)}>
-        <Card
-          className="indivisible-card group-cell"
-          key={item.id}
-          title={item.name}
-        >
-          <ul>
-            <li id="group-location">{item.city} {item.state}, {item.zip}</li>
-          </ul>
-          <ul>
-            {iconsSocial}
-          </ul>
-        </Card>
-      </div>
-    );
-  }
 
   render() {
     const { type } = this.props;
@@ -159,6 +111,7 @@ class TableCell extends React.Component {
     );
   }
 }
+
 
 TableCell.propTypes = {
   color: PropTypes.string,
