@@ -161,7 +161,8 @@ class MapView extends React.Component {
             `)
           .addTo(map);
       }
-      return undefined;
+      return popup.remove();
+;
     });
   }
 
