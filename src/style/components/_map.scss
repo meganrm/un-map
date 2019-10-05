@@ -1,8 +1,9 @@
+@import '../modules/utility';
 /**
 * Create a position for the map
 * on the page */
 #map {
-  height: 570px;
+  height: $map-and-sidebar-height;
   width: 100vw;
   right: 0;
   order: 2;

@@ -1,3 +1,4 @@
+@import '../modules/utility';
 // general styles for both side bars
 .full-width{
   .side-bar-container{
@@ -24,7 +25,7 @@
   z-index: 20;
   display: flex;
   align-items:stretch;
-  height: 560px;
+  height: $map-and-sidebar-height;
   width: 27.5vw;
   flex: 1 auto;
   order: 1;
