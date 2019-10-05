@@ -2,12 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import superagent from 'superagent';
 import moment from 'moment-timezone';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import LazyLoad from 'react-lazy-load';
 
-import faFacebookSquare from '@fortawesome/fontawesome-free-brands/faFacebookSquare';
-import faTwitterSquare from '@fortawesome/fontawesome-free-brands/faTwitterSquare';
-import faEnvelope from '@fortawesome/fontawesome-free-solid/faEnvelope';
-import faExternalLinkSquareAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkSquareAlt';
 import {
   Card,
   Icon,
@@ -16,7 +12,7 @@ import {
 import { indivisibleUrl } from '../state/constants';
 
 const {
-  Paragraph
+  Paragraph,
 } = Typography;
 
 /* eslint-disable */
@@ -53,16 +49,14 @@ class TableCell extends React.Component {
     super(props);
     this.renderEvents = this.renderEvents.bind(this);
   }
-
   renderEvents() {
     const {
       iconName,
       item,
-      refcode,
     } = this.props;
     const actions = [];
     if (item.url) {
-      actions.push((<Icon type="link" key="setting" href={item.url}/>));
+      actions.push((<Icon type="link" key="setting" href={item.url} />));
     }
     if (item.organizerContact) {
       actions.push((<Icon type="mail" key="edit" />));
@@ -73,7 +67,17 @@ class TableCell extends React.Component {
         className={`event-cell ${iconName}`}
         key={`${item.id}`}
         title={item.title}
-        cover={item.photo && (<img alt="event-logo" src={item.photo} />)}
+        cover={
+            item.photo && (
+            <LazyLoad
+              offset={1000}
+            >
+              <img
+                alt="event-logo"
+                src={item.photo}
+              />
+            </LazyLoad>
+              )}
         actions={actions}
       >
         {item.host}
@@ -85,14 +89,18 @@ class TableCell extends React.Component {
           <li className="semi-bold">{startTime}</li>
           <li>{item.address}</li>
         </ul>
-        <Card.Meta 
-          title={item.title} 
+        <Card.Meta
+          title={item.title}
           description={
-            <Paragraph ellipsis={{ rows: 3, expandable: true }}>
+            <Paragraph ellipsis={{
+                expandable: true,
+                rows: 3,
+                }}
+            >
               {item.description}
             </Paragraph>
             }
-          />
+        />
 
       </Card>);
   }
@@ -114,19 +122,13 @@ class TableCell extends React.Component {
 
 
 TableCell.propTypes = {
-  color: PropTypes.string,
   iconName: PropTypes.string,
   item: PropTypes.shape({}).isRequired,
-  refcode: PropTypes.string,
-  selectItem: PropTypes.func,
   type: PropTypes.string.isRequired,
 };
 
 TableCell.defaultProps = {
-  color: '',
   iconName: '',
-  refcode: '',
-  selectItem: () => {},
 };
 
 export default TableCell;

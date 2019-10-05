@@ -6,17 +6,7 @@ import Table from '../components/Table';
 class SideBar extends React.Component {
   constructor(props) {
     super(props);
-    this.renderTable = this.renderTable.bind(this);
     this.renderTotal = this.renderTotal.bind(this);
-  }
-
-  renderTable() {
-    const {
-      location,
-      filterBy,
-      type,
-    } = this.props;
-    return true;
   }
 
   renderTotal() {
@@ -24,6 +14,7 @@ class SideBar extends React.Component {
     if (renderTotal) {
       return renderTotal(items);
     }
+    return null;
   }
 
   render() {
@@ -41,7 +32,6 @@ class SideBar extends React.Component {
           colorMap={colorMap}
           items={items}
           refcode={refcode}
-          shouldRender={this.renderTable()}
           type={type}
           selectItem={selectItem}
         />
@@ -51,12 +41,10 @@ class SideBar extends React.Component {
 }
 
 SideBar.propTypes = {
-  allItems: PropTypes.arrayOf(PropTypes.object).isRequired,
   colorMap: PropTypes.arrayOf(PropTypes.shape({})),
-  filterBy: PropTypes.string.isRequired,
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
-  location: PropTypes.shape({}).isRequired,
   refcode: PropTypes.string,
+  renderTotal: PropTypes.func.isRequired,
   selectItem: PropTypes.func,
   type: PropTypes.string.isRequired,
 };

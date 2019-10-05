@@ -25,7 +25,7 @@ class SearchBar extends React.Component {
   render() {
     return (
       <Search
-        placeholder={'search by address'}
+        placeholder="search by address"
         onSearch={value => this.handleSubmit(value)}
       />
     );
@@ -33,8 +33,6 @@ class SearchBar extends React.Component {
 }
 
 SearchBar.propTypes = {
-  mapType: PropTypes.string.isRequired,
-  searchType: PropTypes.string.isRequired,
   submitHandler: PropTypes.func.isRequired,
 };
 

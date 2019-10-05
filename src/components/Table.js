@@ -9,7 +9,7 @@ class Table extends React.Component {
   constructor(props) {
     super(props);
     this.getColor = this.getColor.bind(this);
-    this.getIconName = this.getIconName.bind(this);    
+    this.getIconName = this.getIconName.bind(this);
   }
 
   getColor(issueFocus) {
@@ -34,17 +34,10 @@ class Table extends React.Component {
     const {
       items,
       refcode,
-      shouldRender,
       type,
       selectItem,
     } = this.props;
-    if (!shouldRender) {
-      return (
-        <div id="groups-list">
-          <p>Search for groups near you</p>
-        </div>
-      );
-    }
+
     if (items.length === 0 && type === 'events') {
       return (
         <div id="events-list">
@@ -83,7 +76,6 @@ Table.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   refcode: PropTypes.string,
   selectItem: PropTypes.func,
-  shouldRender: PropTypes.bool.isRequired,
   type: PropTypes.string.isRequired,
 };
 

@@ -4,6 +4,3 @@ export const getFilterBy = state => state.selections.filterBy;
 export const getFilterValue = state => state.selections.filterValue;
 export const getFilters = state => state.selections.filters;
 export const getRefCode = state => state.selections.refcode;
-export const getSearchType = state => state.selections.searchType;
-export const getDistrict = state => state.selections.district;
-export const getSelectedState = state => state.selections.usState;

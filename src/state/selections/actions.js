@@ -11,16 +11,6 @@ export const setLatLng = payload => ({
   type: 'SET_LAT_LNG',
 });
 
-export const searchByDistrict = payload => ({
-  payload,
-  type: 'SEARCH_BY_DISTRICT',
-});
-
-export const setUsState = payload => ({
-  payload,
-  type: 'SET_US_STATE',
-});
-
 export const resetSelections = () => ({
   type: 'RESET_SELECTIONS',
 });
@@ -51,11 +41,6 @@ export const searchByQueryString = payload => ({
 
 export const resetSearchByQueryString = () => ({
   type: 'RESET_SEARCH_BY_KEY_VALUE',
-});
-
-export const changeSearchType = payload => ({
-  payload,
-  type: 'SET_SEARCH_TYPE',
 });
 
 export const setIssueTypeFilters = payload => ({
@@ -92,7 +77,6 @@ export const getLatandLngFromSearch = payload => (dispatch) => {
         body,
       } = returned;
       if (body.features && body.features.length) {
-
         const data = body.features[0];
 
         const newLatLng = {

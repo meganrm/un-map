@@ -2,8 +2,11 @@
   ul {
     list-style-type: none;
   }
-  .ant-card-cover img {
-    border-radius: 0;
+  .ant-card-cover {
+    overflow: hidden;
+      img {
+      border-radius: 0;
+    }
   }
   .ant-card-body{
     @include montserrat-regular;

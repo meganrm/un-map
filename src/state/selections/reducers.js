@@ -7,9 +7,6 @@ const initialState = {
   filterValue: '',
   location: {},
   refcode: '',
-  searchType: 'proximity',
-  usState: '',
-  zipcode: '',
 };
 
 const userSelectionsReducer = (state = initialState, { type, payload }) => {
@@ -26,18 +23,6 @@ const userSelectionsReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         refcode: payload,
-      };
-    case 'SET_US_STATE':
-      return {
-        ...state,
-        usState: payload,
-      };
-    case 'SEARCH_BY_DISTRICT':
-      return {
-        ...state,
-        district: payload.district,
-        filterBy: 'state',
-        filterValue: payload.state,
       };
     case 'SET_TEXT_FILTER':
       return {
@@ -70,12 +55,6 @@ const userSelectionsReducer = (state = initialState, { type, payload }) => {
         ...state,
         filterBy: initialState.filterBy,
         filterValue: initialState.filterValue,
-      };
-    case 'SET_SEARCH_TYPE':
-      return {
-        ...state,
-        district: initialState.district,
-        searchType: payload,
       };
     case 'SET_ISSUE_TYPE_FILTERS':
       return {

@@ -1,0 +1,1 @@
+Webpack will copy the contents of this folder, if you want to host datasets locally this is a good place to do it. 

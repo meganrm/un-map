@@ -36,8 +36,6 @@ class MapView extends React.Component {
       center,
       selectedItem,
     } = nextProps;
-    this.map.metadata = { searchType: nextProps.searchType };
-
 
     // Highlight selected item
     if (this.props.selectedItem !== selectedItem) {
@@ -263,7 +261,7 @@ class MapView extends React.Component {
   }
 
   initializeMap(featuresHome) {
-    const { type, searchType } = this.props;
+    const { type } = this.props;
 
     mapboxgl.accessToken =
          'pk.eyJ1IjoieHJnbG9iYWwiLCJhIjoiY2swdndhc205MTNucTNtcXY5bTd3cXg5bCJ9.0GHuJbhIE_SBKoSLoDlI0w';
@@ -280,9 +278,6 @@ class MapView extends React.Component {
     this.map.dragRotate.disable();
     this.map.touchZoomRotate.disableRotation();
     this.makeZoomToNationalButton();
-    this.map.metadata = {
-      searchType,
-    };
     // map on 'load'
     this.map.on('load', () => {
       if (type === 'events') {
@@ -316,7 +311,6 @@ MapView.propTypes = {
   items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onColorMapUpdate: PropTypes.func.isRequired,
   resetSelections: PropTypes.func.isRequired,
-  searchType: PropTypes.string,
   selectedItem: PropTypes.shape({}),
   setLatLng: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
@@ -324,7 +318,6 @@ MapView.propTypes = {
 
 MapView.defaultProps = {
   center: {},
-  searchType: 'proximity',
   selectedItem: null,
 };
 
