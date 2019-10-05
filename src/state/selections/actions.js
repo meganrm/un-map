@@ -1,6 +1,10 @@
 import superagent from 'superagent';
 
-import { firebaseUrl } from '../constants';
+import {
+  firebaseUrl,
+  geocodingToken,
+  geoCodingApiUrl,
+} from '../constants';
 
 export const setLatLng = payload => ({
   payload,
@@ -80,23 +84,23 @@ export const getLatandLngFromSearch = payload => (dispatch) => {
     return dispatch(setLatLng({}));
   }
   const addressQuery = escape(payload.query);
-  const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${addressQuery}&key=AIzaSyDP8q2OVisSLyFyOUU6OTgGjNNQCq7Q3rE`;
+  const url = `${geoCodingApiUrl}/geocoding/v5/mapbox.places/${addressQuery}.json?access_token=${geocodingToken}`;
   return superagent
     .get(url)
     .then((returned) => {
       const {
-        results,
-      } = returned.body;
-      if (results && results.length) {
-        const data = results[0];
+        body,
+      } = returned;
+      if (body.features && body.features.length) {
+
+        const data = body.features[0];
+
         const newLatLng = {
-          lat: data.geometry.location.lat,
-          lng: data.geometry.location.lng,
+          lat: data.center[1],
+          lng: data.center[0],
         };
-        //  this.address = data.formatted_address;
         return dispatch(setLatLng(newLatLng));
       }
       return dispatch(setLatLng({}));
-
     });
 };
