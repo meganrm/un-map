@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { find  } from 'lodash';
+import { find } from 'lodash';
 import geoViewport from '@mapbox/geo-viewport';
-import bboxes from '../data/bboxes';
-import Point from '../logics/features';
-import states from '../data/states';
-import mapboxgl from 'mapbox-gl/dist/mapbox-gl.js';
+import mapboxgl from 'mapbox-gl/dist/mapbox-gl';
 
+import Point from '../logics/features';
 
 class MapView extends React.Component {
   constructor(props) {
@@ -36,9 +34,6 @@ class MapView extends React.Component {
   componentWillReceiveProps(nextProps) {
     const {
       center,
-      items,
-      filterByValue,
-      distance,
       selectedItem,
     } = nextProps;
     this.map.metadata = { searchType: nextProps.searchType };
@@ -52,7 +47,7 @@ class MapView extends React.Component {
     if (center.lng) {
       return this.map.flyTo({
         center: [Number(center.lng), Number(center.lat)],
-        zoom: 5.52,
+        zoom: 6.52,
       });
     }
     return this.map.flyTo({
@@ -132,13 +127,9 @@ class MapView extends React.Component {
 
   addPopups(layer) {
     const { map } = this;
-    const {
-      type,
-      refcode,
-    } = this.props;
     const popup = new mapboxgl.Popup({
-      // closeButton: true,
-      // closeOnClick: true,
+      closeButton: true,
+      closeOnClick: true,
     });
 
     map.on('mousemove', (e) => {
@@ -162,7 +153,6 @@ class MapView extends React.Component {
           .addTo(map);
       }
       return popup.remove();
-;
     });
   }
 
@@ -223,7 +213,7 @@ class MapView extends React.Component {
         type: 'geojson',
       },
       type: 'symbol',
-    } );
+    });
   }
 
   clusterData(featuresHome) {
@@ -260,9 +250,6 @@ class MapView extends React.Component {
 
   // Creates the button in our zoom controls to go to the national view
   makeZoomToNationalButton() {
-    const {
-      selectedUsState,
-    } = this.props;
     document.querySelector('.mapboxgl-ctrl-compass').remove();
     if (document.querySelector('.mapboxgl-ctrl-globe')) {
       document.querySelector('.mapboxgl-ctrl-globe').remove();
@@ -271,7 +258,6 @@ class MapView extends React.Component {
     globeButton.className = 'mapboxgl-ctrl-icon mapboxgl-ctrl-globe';
 
     globeButton.innerHTML = '<span class="globe-icon"></span>';
-    
     globeButton.addEventListener('click', this.handleReset);
     document.querySelector('.mapboxgl-ctrl-group').appendChild(globeButton);
   }
@@ -325,31 +311,21 @@ class MapView extends React.Component {
 }
 
 MapView.propTypes = {
-  center: PropTypes.shape({ lat: PropTypes.string, lng: PropTypes.string, ZIP: PropTypes.string }),
+  center: PropTypes.shape({ lat: PropTypes.string, lng: PropTypes.string }),
   colorMap: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
-  distance: PropTypes.number,
-  filterByValue: PropTypes.shape({}),
   items: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onColorMapUpdate: PropTypes.func.isRequired,
-  refcode: PropTypes.string,
   resetSelections: PropTypes.func.isRequired,
-  searchByDistrict: PropTypes.func.isRequired,
-  searchByQueryString: PropTypes.func.isRequired,
   searchType: PropTypes.string,
   selectedItem: PropTypes.shape({}),
-  selectedUsState: PropTypes.string,
   setLatLng: PropTypes.func.isRequired,
   type: PropTypes.string.isRequired,
 };
 
 MapView.defaultProps = {
   center: {},
-  distance: 50,
-  filterByValue: {},
-  refcode: '',
   searchType: 'proximity',
   selectedItem: null,
-  selectedUsState: null,
 };
 
 export default MapView;

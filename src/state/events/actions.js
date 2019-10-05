@@ -27,7 +27,7 @@ export const startSetEvents = () => (dispatch) => {
     const allevents = result.body;
     const events = Object.keys(allevents)
       .map(id => new GlobalXrEvent(allevents[id]))
-      // .filter(event => moment(event.starts_at).isAfter())
+      // .filter(event => moment(event.timeStart).isAfter())
       .sort((a, b) => ((moment(a.timeStart).isSameOrAfter(moment(b.timeStart))) ? 1 : -1));
     return (dispatch(setEvents(events)));
   });

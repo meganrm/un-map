@@ -42,6 +42,9 @@ class SearchBar extends React.Component {
 
   componentWillMount() {
     const params = ['location'];
+
+    // NOTE: this code is for being able to set up query params for the map
+    // You can delete it if you arent going to use this feature.
     const queries = params.reduce((acc, cur) => {
       const query = document.location.search.match(new RegExp(`[?&]${cur}[^&]*`));
       if (query && query[0].split('=').length > 1) {
@@ -64,18 +67,12 @@ class SearchBar extends React.Component {
   searchHandler(value) {
     const { query } = value;
     const {
-      mapType,
       resetSelections,
-      resetSearchByZip,
       resetSearchByQueryString,
-      searchType,
       searchByAddress,
-      searchByZip,
-      searchByQueryString,
     } = this.props;
 
     resetSearchByQueryString();
-    console.log(query);
     if (!query) {
       return resetSelections();
     }
@@ -150,9 +147,9 @@ const mapDispatchToProps = dispatch => ({
   resetSearchByQueryString: () => dispatch(selectionActions.resetSearchByQueryString()),
   resetSearchByZip: () => dispatch(selectionActions.resetSearchByZip()),
   resetSelections: () => dispatch(selectionActions.resetSelections()),
+  searchByAddress: zipcode => dispatch(selectionActions.getLatandLngFromSearch(zipcode)),
   searchByDistrict: district => dispatch(selectionActions.searchByDistrict(district)),
   searchByQueryString: val => dispatch(selectionActions.searchByQueryString(val)),
-  searchByAddress: zipcode => dispatch(selectionActions.getLatandLngFromSearch(zipcode)),
   searchHandler: (query, searchType, mapType) => (
     dispatch(selectionActions.searchHandler(query, searchType, mapType))),
   setDistance: distance => dispatch(selectionActions.setDistance(distance)),
