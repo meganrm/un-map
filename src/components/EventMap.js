@@ -137,8 +137,8 @@ class MapView extends React.Component {
       refcode,
     } = this.props;
     const popup = new mapboxgl.Popup({
-      closeButton: true,
-      closeOnClick: true,
+      // closeButton: true,
+      // closeOnClick: true,
     });
 
     map.on('mousemove', (e) => {
@@ -149,17 +149,15 @@ class MapView extends React.Component {
       if (features.length) {
         const feature = features[0];
         const { properties } = feature;
-        const linkMapping = {
-          events: `<a target="_blank" href=${properties.rsvpHref}${refcode}>rsvp</a>`,
-          groups: '',
-        };
         this.setState({ popoverColor: `popover-${feature.properties.icon}` });
 
         return popup.setLngLat(feature.geometry.coordinates)
           .setHTML(`
-            <h4>${feature.properties.title}</h4>
-            <div>${feature.properties.startsAt}</div>
-            ${linkMapping[type]}
+            <h4>${properties.title}</h4>
+            <div>${properties.startsAt}</div>
+            <div>${properties.location}</div>
+
+            <div>${properties.address}</div>
             `)
           .addTo(map);
       }

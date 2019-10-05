@@ -1,4 +1,4 @@
-import moment from 'moment';
+import moment from 'moment-timezone';
 
 class Point {
   constructor(event) {
@@ -12,8 +12,8 @@ class Point {
       icon: event.icon,
       id: event.id,
       location: event.location || '',
-      socials: event.socials || [],
-      startsAt: event.startsAt ? moment(event.startsAt).format('MMMM Do YYYY, h:mm a') : '',
+      // socials: event.socials || [],
+      startsAt: event.timeStart && event.zoneName ? moment(event.timeStart).tz(event.zoneName).format('MMMM Do YYYY, h:mm a z') : '',
       title: event.title,
       url: event.url || null,
     };

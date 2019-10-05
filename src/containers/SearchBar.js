@@ -128,7 +128,7 @@ class SearchBar extends React.Component {
           distance={distance}
           hidden={searchType === 'district'}
         />
-        {this.renderFilterBar()}
+        {/* {this.renderFilterBar()} */}
       </div>
     );
   }
