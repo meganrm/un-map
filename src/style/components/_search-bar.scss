@@ -16,74 +16,74 @@
     }
     .ant-btn.active {
       border: 2px solid #145d7c;
-      @include box-lift;
     }
+
     .E_SDG_Icons-01 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-01.png");
+      @include image-button('01');
     }
 
     .E_SDG_Icons-02 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-02.png");
+      @include image-button('02');
     }
 
     .E_SDG_Icons-03 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-03.png");
+      @include image-button('03');
     }
 
     .E_SDG_Icons-04 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-04.png");
+      @include image-button('04');
     }
 
     .E_SDG_Icons-05 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-05.png");
+      @include image-button('05');
     }
 
     .E_SDG_Icons-06 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-06.png");
+      @include image-button('06');
     }
 
     .E_SDG_Icons-07 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-07.png");
+      @include image-button('07');
     }
 
     .E_SDG_Icons-08 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-08.png");
+      @include image-button('08');
     }
 
     .E_SDG_Icons-09 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-09.png");
+      @include image-button('09');
     }
 
     .E_SDG_Icons-10 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-10.png");
+      @include image-button('10');
     }
 
     .E_SDG_Icons-11 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-11.png");
+      @include image-button('11');
     }
 
     .E_SDG_Icons-12 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-12.png");
+      @include image-button('12');
     }
 
     .E_SDG_Icons-13 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-13.png");
+      @include image-button('13');
     }
 
     .E_SDG_Icons-14 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-14.png");
+      @include image-button('14');
     }
 
     .E_SDG_Icons-15 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-15.png");
+      @include image-button('15');
     }
 
     .E_SDG_Icons-16 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-16.png");
+      @include image-button('16');
     }
 
     .E_SDG_Icons-17 {
-      background-image: url("../src/assets/images/E Inverted Icons_WEB-17.png");
+      @include image-button('17');
     }
 
   }

@@ -13,3 +13,11 @@
     }
   }
 }
+
+@mixin image-button ($id) {
+  background-image: url("../src/assets/images/E Inverted Icons_WEB-" + $id + ".png");
+  &.active {
+      background-image: url("../src/assets/images/E-WEB-Goal-"+ $id + ".png");
+
+  }
+}
