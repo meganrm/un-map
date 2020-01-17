@@ -30,7 +30,6 @@ class IssueFilterTags extends React.Component {
       onFilterChanged,
       selectedFilters,
     } = this.props;
-    console.log(tag, checked);
     const nextSelectedTags = checked ?
       [...selectedFilters, tag.number] :
       selectedFilters.filter(t => t !== tag.number);
