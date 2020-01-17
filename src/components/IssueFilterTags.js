@@ -9,55 +9,56 @@ const { CheckableTag } = Tag;
 require('style-loader!css-loader!antd/es/tag/style/index.css');
 /* eslint-enable */
 
+const eventTypes = [{
+  number: '01',
+  title: 'raising public awareness',
+},
+{
+  number: '02',
+  title:
+  'conducting scientific research',
+},
+{ number: '03', title: 'taking action at work' },
+{ number: '04', title: 'taking action at home' },
+{ number: '05', title: 'giving financial resources' },
+{ number: '06', title: 'other' }];
 
 class IssueFilterTags extends React.Component {
-  constructor(props) {
-    super(props);
-    const { selectedFilters } = this.props;
-    this.state = {
-      selectedTags: selectedFilters,
-    };
-  }
-
-  componentDidMount() {
-    const { onFilterChanged } = this.props;
-    onFilterChanged(this.state.selectedTags);
-  }
-
-  componentWillReceiveProps(newProps) {
-    this.setState({ selectedTags: newProps.selectedFilters });
-  }
 
   handleChange(tag, checked) {
-    const { onFilterChanged } = this.props;
-    const { selectedTags } = this.state;
+    const {
+      onFilterChanged,
+      selectedFilters,
+    } = this.props;
+    console.log(tag, checked);
     const nextSelectedTags = checked ?
-      [...selectedTags, tag] :
-      selectedTags.filter(t => t !== tag);
-    this.setState(
-      { selectedTags: nextSelectedTags },
-      () => onFilterChanged(nextSelectedTags),
-    );
+      [...selectedFilters, tag.number] :
+      selectedFilters.filter(t => t !== tag.number);
+    onFilterChanged(nextSelectedTags);
   }
 
   render() {
-    const { selectedTags } = this.state;
-    const { issues, colorMap } = this.props;
+    const {
+      selectedFilters,
+    } = this.props;
+    const { colorMap } = this.props;
 
     return (
       <div>
         <h6 style={{ display: 'inline', marginRight: 8 }}>Filter by issue:</h6>
-        {issues.map((tag) => {
+        {eventTypes.map((tag) => {
           const mapping = find(colorMap, { filterBy: tag });
           const color = mapping ? mapping.icon.toLowerCase() : 'circle-stroked-15-grey';
           return (
             <CheckableTag
-              key={tag}
-              checked={selectedTags.indexOf(tag) > -1}
+              key={tag.number}
+              checked = {
+                selectedFilters.indexOf(tag.number) > -1
+              }
               onChange={checked => this.handleChange(tag, checked)}
               className={color}
             >
-              {tag}
+              {tag.title}
             </CheckableTag>
         );
       })}

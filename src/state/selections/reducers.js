@@ -5,6 +5,7 @@ const initialState = {
   district: NaN,
   filterBy: 'all',
   filterValue: '',
+  filters: [],
   location: {},
   refcode: '',
   sdgFilters: [],

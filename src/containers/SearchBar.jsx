@@ -3,12 +3,12 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as selectionActions from '../state/selections/actions';
 
-import { getDistance, getLocation, getSDGFilters } from '../state/selections/selectors';
+import { getDistance, getLocation, getSDGFilters, getFilters } from '../state/selections/selectors';
 
 import SearchInput from '../components/SearchInput';
 import DistanceFilter from '../components/DistanceSlider';
 import SDGCheckBoxes from '../components/SDGCheckBoxes';
-// import IssueFilterTags from '../components/IssueFilterTags';
+import IssueFilterTags from '../components/IssueFilterTags';
 
 /* eslint-disable */
 require('style-loader!css-loader!antd/es/radio/style/index.css');
@@ -22,27 +22,6 @@ class SearchBar extends React.Component {
     this.onTextChange = this.onTextChange.bind(this);
     this.searchHandler = this.searchHandler.bind(this);
     this.distanceHandler = this.distanceHandler.bind(this);
-  }
-
-  componentWillMount() {
-
-    // NOTE: this code is for being able to set up query params for the map
-    // You can delete it if you aren't going to use this feature.
-
-    // const params = ['location'];
-    // const queries = params.reduce((acc, cur) => {
-    //   const query = document.location.search.match(new RegExp(`[?&]${cur}[^&]*`));
-    //   if (query && query[0].split('=').length > 1) {
-    //     acc[cur] = query[0].split('=')[1];
-    //   }
-    //   return acc;
-    // }, {});
-
-    // if (queries.location) {
-    //   return this.searchHandler({
-    //     query: queries.location,
-    //   });
-    // }
   }
 
   onTextChange(e) {
@@ -73,24 +52,23 @@ class SearchBar extends React.Component {
 
   // NOTE: this is a filter component for event types.
   // Can be removed or made to work in the future if we have eventtypes
-  // renderFilterBar() {
-  //   const {
-  //     eventTypes,
-  //     selectedFilters,
-  //     colorMap,
-  //   } = this.props;
+  renderFilterBar() {
+    const {
+      selectedFilters,
+      colorMap,
+      onFilterChanged
+    } = this.props;
 
-  //   return (
-  //     <div className="input-group-filters">
-  //       <IssueFilterTags
-  //         colorMap={colorMap}
-  //         issues={eventTypes}
-  //         onFilterChanged={onFilterChanged}
-  //         selectedFilters={selectedFilters}
-  //       />
-  //     </div>
-  //   );
-  // }
+    return (
+      <div className="input-group-filters">
+        <IssueFilterTags
+          colorMap={colorMap}
+          onFilterChanged={onFilterChanged}
+          selectedFilters={selectedFilters}
+        />
+      </div>
+    );
+  }
 
   render() {
     const {
@@ -101,11 +79,11 @@ class SearchBar extends React.Component {
     } = this.props;
     return (
       <div className="search-bar">
-        <SDGCheckBoxes 
+        <SDGCheckBoxes
           sdgFilters={sdgFilters}
           setSDGFilters={setSDGFilters}
         />
-        <SearchInput
+        {/* <SearchInput
           mapType={mapType}
           submitHandler={this.searchHandler}
         />
@@ -113,11 +91,11 @@ class SearchBar extends React.Component {
         <DistanceFilter
           changeHandler={this.distanceHandler}
           distance={distance}
-        />
+        /> */}
         {/* NOTE: this has filtering functionality that is currently turned off.
         it was used to filter on event type. We can turn it back on
         if that's a desired feature.  */}
-        {/* {this.renderFilterBar()} */}
+        {this.renderFilterBar()}
       </div>
     );
   }
@@ -127,6 +105,7 @@ const mapStateToProps = state => ({
   distance: getDistance(state),
   location: getLocation(state),
   sdgFilters: getSDGFilters(state),
+  selectedFilters: getFilters(state),
 });
 
 const mapDispatchToProps = dispatch => ({

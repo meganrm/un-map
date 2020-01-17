@@ -1,5 +1,5 @@
 {
-  "name": "global-xr-map",
+  "name": "un-map",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -68,12 +68,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/townhallproject/global-xr-map.git"
+    "url": "git+https://github.com/meganrm/un-map.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/townhallproject/global-xr-map/issues"
+    "url": "https://github.com/meganrm/un-map/issues"
   },
-  "homepage": "https://github.com/townhallproject/global-xr-map"
+  "homepage": "https://github.com/meganrm/un-map"
 }
