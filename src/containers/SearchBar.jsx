@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as selectionActions from '../state/selections/actions';
 
-import { getDistance, getLocation } from '../state/selections/selectors';
+import { getDistance, getLocation, getSDGFilters } from '../state/selections/selectors';
 
 import SearchInput from '../components/SearchInput';
 import DistanceFilter from '../components/DistanceSlider';
+import SDGCheckBoxes from '../components/SDGCheckBoxes';
 // import IssueFilterTags from '../components/IssueFilterTags';
 
 /* eslint-disable */
@@ -95,9 +96,15 @@ class SearchBar extends React.Component {
     const {
       distance,
       mapType,
+      sdgFilters,
+      setSDGFilters,
     } = this.props;
     return (
       <div className="search-bar">
+        <SDGCheckBoxes 
+          sdgFilters={sdgFilters}
+          setSDGFilters={setSDGFilters}
+        />
         <SearchInput
           mapType={mapType}
           submitHandler={this.searchHandler}
@@ -119,6 +126,7 @@ class SearchBar extends React.Component {
 const mapStateToProps = state => ({
   distance: getDistance(state),
   location: getLocation(state),
+  sdgFilters: getSDGFilters(state),
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -132,6 +140,7 @@ const mapDispatchToProps = dispatch => ({
   searchHandler: (query, searchType, mapType) => (
     dispatch(selectionActions.searchHandler(query, searchType, mapType))),
   setDistance: distance => dispatch(selectionActions.setDistance(distance)),
+  setSDGFilters: filters => dispatch(selectionActions.setSDGFilters(filters)),
   setTextFilter: text => dispatch(selectionActions.setTextFilter(text)),
 });
 
@@ -140,6 +149,7 @@ SearchBar.propTypes = {
   mapType: PropTypes.string.isRequired,
   resetSearchByQueryString: PropTypes.func.isRequired,
   resetSelections: PropTypes.func.isRequired,
+  sdgFilters: PropTypes.arrayOf(PropTypes.string).isRequired,
   searchByAddress: PropTypes.func.isRequired,
   setDistance: PropTypes.func.isRequired,
   setTextFilter: PropTypes.func.isRequired,

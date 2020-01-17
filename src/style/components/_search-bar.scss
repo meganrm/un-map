@@ -1,14 +1,95 @@
 .search-bar {
   flex: 1 100%;
-  height: 65px;
+  // height: 65px;
   @include box-3d;
   z-index: 99;
   padding: 0.5vw;
   display: flex;
   flex-flow: row wrap;
 
+  .button-wrapper {
+    .ant-btn {
+      height: 80px;
+      width: 80px;
+      background-size: contain;
+      margin: 10px;
+    }
+    .ant-btn.active {
+      border: 2px solid #145d7c;
+      @include box-lift;
+    }
+    .E_SDG_Icons-01 {
+      background-image: url("../src/assets/images/E_SDG_Icons-01.jpg");
+    }
+
+    .E_SDG_Icons-02 {
+      background-image: url("../src/assets/images/E_SDG_Icons-02.jpg");
+    }
+
+    .E_SDG_Icons-03 {
+      background-image: url("../src/assets/images/E_SDG_Icons-03.jpg");
+    }
+
+    .E_SDG_Icons-04 {
+      background-image: url("../src/assets/images/E_SDG_Icons-04.jpg");
+    }
+
+    .E_SDG_Icons-05 {
+      background-image: url("../src/assets/images/E_SDG_Icons-05.jpg");
+    }
+
+    .E_SDG_Icons-06 {
+      background-image: url("../src/assets/images/E_SDG_Icons-06.jpg");
+    }
+
+    .E_SDG_Icons-07 {
+      background-image: url("../src/assets/images/E_SDG_Icons-07.jpg");
+    }
+
+    .E_SDG_Icons-08 {
+      background-image: url("../src/assets/images/E_SDG_Icons-08.jpg");
+    }
+
+    .E_SDG_Icons-09 {
+      background-image: url("../src/assets/images/E_SDG_Icons-09.jpg");
+    }
+
+    .E_SDG_Icons-10 {
+      background-image: url("../src/assets/images/E_SDG_Icons-10.jpg");
+    }
+
+    .E_SDG_Icons-11 {
+      background-image: url("../src/assets/images/E_SDG_Icons-11.jpg");
+    }
+
+    .E_SDG_Icons-12 {
+      background-image: url("../src/assets/images/E_SDG_Icons-12.jpg");
+    }
+
+    .E_SDG_Icons-13 {
+      background-image: url("../src/assets/images/E_SDG_Icons-13.jpg");
+    }
+
+    .E_SDG_Icons-14 {
+      background-image: url("../src/assets/images/E_SDG_Icons-14.jpg");
+    }
+
+    .E_SDG_Icons-15 {
+      background-image: url("../src/assets/images/E_SDG_Icons-15.jpg");
+    }
+
+    .E_SDG_Icons-16 {
+      background-image: url("../src/assets/images/E_SDG_Icons-16.jpg");
+    }
+
+    .E_SDG_Icons-17 {
+      background-image: url("../src/assets/images/E_SDG_Icons-17.jpg");
+    }
+
+  }
+
   // search input
-  .ant-input-search.ant-input-affix-wrapper{
+  .ant-input-search.ant-input-affix-wrapper {
     flex: 1 50%;
     width: auto;
   }
@@ -18,20 +99,24 @@
     flex: 1 50%;
     display: flex;
     padding: 5px;
-    .search-by-title{
+
+    .search-by-title {
       margin-left: 0.5vw;
       margin-right: 0.5vw;
     }
+
     .ant-radio-wrapper.ant-radio-wrapper-checked {
       background-color: $main-light-blue;
       color: $main-white;
       border-radius: 25px;
       padding-left: 3px;
     }
-    .ant-radio-inner:after{
+
+    .ant-radio-inner:after {
       background-color: $main-light-blue;
     }
-    .ant-radio-checked .ant-radio-inner{
+
+    .ant-radio-checked .ant-radio-inner {
       border-color: $main-light-blue;
     }
   }
@@ -43,23 +128,29 @@
     padding-bottom: 4px;
     padding-left: 12px;
     padding-right: 12px;
+
     .ant-slider {
       margin: 7px;
     }
+
     .ant-input-number {
       margin-left: 0.5em;
+
       input {
         padding: 0 0.5em;
         width: 100%;
       }
     }
-    .ant-slider-track{
+
+    .ant-slider-track {
       background: $main-light-blue;
     }
-    .ant-slider-handle{
+
+    .ant-slider-handle {
       border: solid 2px $main-light-blue;
     }
   }
+
   .event-count {
     flex: 1 100%;
   }
@@ -76,6 +167,7 @@
 .search-type-switch.ant-switch {
   background-color: $brand-primary;
 }
+
 .search-type-switch.ant-switch-checked {
   background-color: $brand-red;
 }
@@ -98,6 +190,7 @@ select {
   width: 10vw;
   height: 31px;
 }
+
 .ant-tag-checkable-checked {
   &.town-hall-icon {
     background-color: $town-hall;

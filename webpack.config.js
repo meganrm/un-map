@@ -1,4 +1,5 @@
 require('dotenv').config();
+const path = require('path');
 
 // Dynamic Script and Style Tags
 const HTMLPlugin = require('html-webpack-plugin');
@@ -28,15 +29,15 @@ const plugins = [
     __DEBUG__: JSON.stringify(!production),
   }),
   new CopyWebpackPlugin([{
-    flatten: true,
-    from: 'src/data',
-    to: 'data',
-  },
-  {
-    flatten: true,
-    from: 'src/assets/images',
-    to: 'assets',
-  },
+      flatten: true,
+      from: 'src/data',
+      to: 'data',
+    },
+    {
+      flatten: true,
+      from: 'src/assets/images',
+      to: 'assets',
+    },
   ]),
 ];
 
@@ -48,6 +49,9 @@ module.exports = {
   entry: `${__dirname}/src/main.js`,
 
   devtool: 'source-map',
+  resolve: {
+    extensions: [".jsx", ".js", ".json"]
+  },
 
   // Stick it into the "path" folder with that file name
   output: {
@@ -68,19 +72,19 @@ module.exports = {
         test: /\.scss$/,
         loader: ExtractPlugin.extract({
           use: [{
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
+              loader: 'css-loader',
+              options: {
+                sourceMap: true,
+              },
             },
-          },
-          'resolve-url-loader',
-          {
-            loader: 'sass-loader',
-            options: {
-              includePaths: [`${__dirname}/src/style`],
-              sourceMap: true,
+            'resolve-url-loader',
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: [`${__dirname}/src/style`],
+                sourceMap: true,
+              },
             },
-          },
           ],
         }),
       },
@@ -99,10 +103,12 @@ module.exports = {
         exclude: /\.glyph.svg/,
         use: [{
           loader: 'url-loader',
-          options: {
-            limit: 6000,
-            name: 'image/[name].[ext]',
-          },
+          // options: {
+            // limit: 6000,
+            // name(file) {
+            //   return `${path.relative('src', file)}`
+            // }
+          // },
         }],
       },
 

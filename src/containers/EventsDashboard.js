@@ -38,34 +38,31 @@ class EventsDashboard extends React.Component {
     this.renderMap = this.renderMap.bind(this);
 
     this.state = {
-      init: true,
+      init: false,
     };
   }
 
-  componentWillMount() {
-    const {
-      setRefCode,
-    } = this.props;
-
-    if (document.location.search) {
-      setRefCode(document.location.search);
-    }
-  }
 
   componentDidMount() {
     const {
       getInitialEvents,
+      setRefCode,
     } = this.props;
-    getInitialEvents()
-      .then((returned) => {
-        if (this.state.issueFilter) {
-          this.props.setFilters(this.state.issueFilter);
-          this.setState({ issueFilter: null });
-        } else {
-          this.props.setInitialFilters(returned);
-        }
-        this.setState({ init: false });
-      });
+
+
+    if (document.location.search) {
+      setRefCode(document.location.search);
+    }
+    // getInitialEvents()
+    //   .then((returned) => {
+    //     if (this.state.issueFilter) {
+    //       this.props.setFilters(this.state.issueFilter);
+    //       this.setState({ issueFilter: null });
+    //     } else {
+    //       this.props.setInitialFilters(returned);
+    //     }
+    //     this.setState({ init: false });
+    //   });
   }
 
   renderTotal(items) {

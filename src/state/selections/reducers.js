@@ -7,6 +7,7 @@ const initialState = {
   filterValue: '',
   location: {},
   refcode: '',
+  sdgFilters: [],
 };
 
 const userSelectionsReducer = (state = initialState, { type, payload }) => {
@@ -60,6 +61,11 @@ const userSelectionsReducer = (state = initialState, { type, payload }) => {
       return {
         ...state,
         filters: payload,
+      };
+    case 'SET_SDG_FILTERS':
+      return {
+        ...state,
+        sdgFilters: payload,
       };
     case 'SET_INITIAL_FILTERS':
       return {
