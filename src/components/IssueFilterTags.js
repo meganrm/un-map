@@ -44,7 +44,7 @@ class IssueFilterTags extends React.Component {
 
     return (
       <div>
-        <h6 style={{ display: 'inline', marginRight: 8 }}>Filter by issue:</h6>
+        <h6 style={{ display: 'inline', marginRight: 8 }}>Filter by action type:</h6>
         {eventTypes.map((tag) => {
           const mapping = find(colorMap, { filterBy: tag });
           const color = mapping ? mapping.icon.toLowerCase() : 'circle-stroked-15-grey';
