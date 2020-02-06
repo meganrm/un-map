@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import * as selectionActions from '../state/selections/actions';
 
-import { getDistance, getLocation, getSDGFilters, getFilters } from '../state/selections/selectors';
+import { getDistance, getLocation, getSDGFilters, getActionTypes } from '../state/selections/selectors';
 
 import SearchInput from '../components/SearchInput';
 import DistanceFilter from '../components/DistanceSlider';
@@ -73,7 +73,6 @@ class SearchBar extends React.Component {
   render() {
     const {
       distance,
-      mapType,
       sdgFilters,
       setSDGFilters,
     } = this.props;
@@ -105,11 +104,11 @@ const mapStateToProps = state => ({
   distance: getDistance(state),
   location: getLocation(state),
   sdgFilters: getSDGFilters(state),
-  selectedFilters: getFilters(state),
+  selectedFilters: getActionTypes(state),
 });
 
 const mapDispatchToProps = dispatch => ({
-  onFilterChanged: filters => dispatch(selectionActions.setIssueTypeFilters(filters)),
+  onFilterChanged: filters => dispatch(selectionActions.setActionTypeFilter(filters)),
   resetSearchByQueryString: () => dispatch(selectionActions.resetSearchByQueryString()),
   resetSearchByZip: () => dispatch(selectionActions.resetSearchByZip()),
   resetSelections: () => dispatch(selectionActions.resetSelections()),
@@ -125,7 +124,6 @@ const mapDispatchToProps = dispatch => ({
 
 SearchBar.propTypes = {
   distance: PropTypes.number.isRequired,
-  mapType: PropTypes.string.isRequired,
   resetSearchByQueryString: PropTypes.func.isRequired,
   resetSelections: PropTypes.func.isRequired,
   sdgFilters: PropTypes.arrayOf(PropTypes.string).isRequired,

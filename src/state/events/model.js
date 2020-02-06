@@ -1,4 +1,4 @@
-export default class GlobalXrEvent {
+export default class SDGEvent {
   constructor(props) {
     Object.assign(this, props);
   }

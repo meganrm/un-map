@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Montserrat:300,400,600,700');
+@import url('https://fonts.googleapis.com/css?family=Oswald|Roboto:300,400,600,700');
 
 h2,
 h3 {
@@ -23,7 +23,7 @@ p {
 
 /****** Group Style Typography ********/
 #groups-list {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Oswald', sans-serif;
 }
 
 #group-location {
@@ -46,11 +46,11 @@ p {
 
 /****** Event Style Typography ********/
 #events-list {
-  font-family: 'Montserrat', sans-serif;
+  font-family: 'Oswald', sans-serif;
 }
 #events-list {
   .semi-bold {
-    @include montserrat-semi-bold;
+    @include oswald-semi-bold;
   }
 }
 

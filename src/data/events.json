@@ -1,0 +1,41 @@
+[
+  {
+    "title": "Demonstration on Hunger",
+    "actionType": "01",
+    "category": "02",
+    "date": "March 15, 2020",
+    "timeStart": "12:00 PM",
+    "location": "Levy Junction Shopping Mall",
+    "address": "H7PP+94 Lusaka, Zambia",
+    "host": "World Vision Zambia.",
+    "hostContact": "test@wvi.org/",
+    "lat": -15.4140625,
+    "lng": 28.2853125
+  },
+  {
+    "title": "Neighborhood meeting against violence",
+    "actionType": "04",
+    "category": "16",
+    "date": "March 18, 2020",
+    "timeStart": "12:00 PM",
+    "location": "Comfama Vásquez Building",
+    "address": "6CWH+79 Medellín, Medellin, Antioquia, Colombia",
+    "host": "Conciliation Resources",
+    "hostContact": "test@c-r.org",
+    "lat": 6.2456875,
+    "lng": -75.5737565
+  },
+  {
+    "title": "Seminar on Sustainable Fishing",
+    "actionType": "03",
+    "category": "16",
+    "date": "March 120, 2020",
+    "timeStart": "12:00 PM",
+    "location": "Universitas Atma Jaya Makassar",
+    "address": "RCH3+X7 Tamalate, Makassar City, South Sulawesi, Indonesia",
+    "host": "Indonesian Pole & Line and Handline Fisheries Association",
+    "hostContact": "test@ap2hi.org",
+    "lat": -5.1700625,
+    "lng": 119.4009935
+  }
+]

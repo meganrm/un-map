@@ -23,7 +23,6 @@ class SideBar extends React.Component {
       items,
       refcode,
       selectItem,
-      type,
     } = this.props;
     return (
       <div className="side-bar-container">
@@ -32,7 +31,6 @@ class SideBar extends React.Component {
           colorMap={colorMap}
           items={items}
           refcode={refcode}
-          type={type}
           selectItem={selectItem}
         />
       </div>

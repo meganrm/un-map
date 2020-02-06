@@ -7,17 +7,17 @@ $hbase:3em;
     }
 }
 
-@mixin montserrat-semi-bold{
+@mixin oswald-semi-bold{
   font-weight: 600;
-  font-family: 'Montserrat';
+  font-family: 'Oswald';
 }
 
-@mixin montserrat-regular {
-  font-family: 'Montserrat';
+@mixin roboto-regular {
+  font-family: 'Roboto';
 }
 
-@mixin montserrat-bold-all-caps {
-  font-family: 'Montserrat';
+@mixin oswald-bold-all-caps {
+  font-family: 'Oswald';
   text-transform: uppercase;
   font-weight: 800;
 }

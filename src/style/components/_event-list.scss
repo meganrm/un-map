@@ -14,20 +14,13 @@
     padding-left: 20px;
     padding-right: 20px;
     background-color:  $main-white;
-    @include montserrat-bold-all-caps;
+    @include oswald-bold-all-caps;
   }
   .ant-card-head {
     background-color: $brand-primary;
   }
   .event-cell {
     @include cell($brand-primary);
-  }
-
-  .other {
-    @include cell($other);
-  }
-  .general {
-    @include cell($general);
   }
 
 }

@@ -9,11 +9,11 @@ class Point {
     };
     this.properties = {
       address: event.address,
-      icon: event.icon,
+      icon: 'marker-11',
       id: event.id,
       location: event.location || '',
       // socials: event.socials || [],
-      startsAt: event.timeStart && event.zoneName ? moment(event.timeStart).tz(event.zoneName).format('MMMM Do YYYY, h:mm a z') : '',
+      startsAt: event.timeStart,
       title: event.title,
       url: event.url || null,
     };

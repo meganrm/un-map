@@ -11,10 +11,8 @@ class SDGButtons extends React.Component {
   constructor(props) {
     super(props);
     this.onChange = this.onChange.bind(this);
-    this.state = {
-      selected: [],
-    };
   }
+
   onChange({ target }) {
     const { setSDGFilters, sdgFilters } = this.props;
     let newSelected;
@@ -31,7 +29,7 @@ class SDGButtons extends React.Component {
     return (
 
       <div className="button-wrapper" onClick={this.onChange}>
-        {options.map(ele => (<Button className={classNames([`E_SDG_Icons-${ele}`, { active: includes(sdgFilters, ele) }])} value={ele} />))}
+        {options.map(ele => (<Button key={ele} className={classNames([`E_SDG_Icons-${ele}`, { active: includes(sdgFilters, ele) }])} value={ele} />))}
       </div>
     );
   }

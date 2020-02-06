@@ -4,7 +4,7 @@ import getData from '../../logics/getData';
 
 import { eventsUrl } from '../constants';
 
-import GlobalXrEvent from './model';
+import SDGEvent from './model';
 
 export const setEvents = events => ({
   events,
@@ -22,11 +22,11 @@ export const updateColorMap = colorMap => ({
 });
 
 export const startSetEvents = () => (dispatch) => {
-  const url = `${eventsUrl}/events.json`;
+  const url = '../../data/events.json';
   return getData(url).then((result) => {
     const allevents = result.body;
     const events = Object.keys(allevents)
-      .map(id => new GlobalXrEvent(allevents[id]))
+      .map(id => new SDGEvent(allevents[id]))
       // .filter(event => moment(event.timeStart).isAfter())
       .sort((a, b) => ((moment(a.timeStart).isSameOrAfter(moment(b.timeStart))) ? 1 : -1));
     return (dispatch(setEvents(events)));

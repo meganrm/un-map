@@ -49,6 +49,7 @@ class TableCell extends React.Component {
     super(props);
     this.renderEvents = this.renderEvents.bind(this);
   }
+
   renderEvents() {
     const {
       iconName,
@@ -58,13 +59,12 @@ class TableCell extends React.Component {
     if (item.url) {
       actions.push((<Icon type="link" key="setting" href={item.url} />));
     }
-    if (item.organizerContact) {
+    if (item.hostContact) {
       actions.push((<Icon type="mail" key="edit" />));
     }
-    const startTime = item.zoneName ? moment(item.timeStart).tz(item.zoneName).format('h:mm A z') : moment(item.timeStart).format('h:mm A z');
     return (
       <Card
-        className={`event-cell ${iconName}`}
+        className={`event-cell action-${item.actionType} category-${item.category}`}
         key={`${item.id}`}
         title={item.title}
         cover={
@@ -85,8 +85,9 @@ class TableCell extends React.Component {
           {item.eventType}
         </ul>
         <ul>
-          <li className="semi-bold">{moment(item.timeStart).format('MMMM Do, YYYY')}</li>
-          <li className="semi-bold">{startTime}</li>
+          <li className="semi-bold">{item.timeStart}</li>
+          <li className="semi-bold">{item.date}</li>
+
           <li>{item.address}</li>
         </ul>
         <Card.Meta
@@ -107,14 +108,12 @@ class TableCell extends React.Component {
 
 
   render() {
-    const { type } = this.props;
-    const renderMapping = {
-      events: this.renderEvents,
-      groups: this.renderGroups,
-    };
+
     return (
       <React.Fragment>
-        {renderMapping[type]()}
+        {
+          this.renderEvents()
+        }
       </React.Fragment>
     );
   }
@@ -124,7 +123,6 @@ class TableCell extends React.Component {
 TableCell.propTypes = {
   iconName: PropTypes.string,
   item: PropTypes.shape({}).isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 TableCell.defaultProps = {

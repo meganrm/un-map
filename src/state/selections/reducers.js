@@ -1,11 +1,11 @@
 import { uniqBy } from 'lodash';
 
 const initialState = {
+  actionTypes: [],
   distance: 50,
   district: NaN,
   filterBy: 'all',
   filterValue: '',
-  filters: [],
   location: {},
   refcode: '',
   sdgFilters: [],
@@ -58,10 +58,10 @@ const userSelectionsReducer = (state = initialState, { type, payload }) => {
         filterBy: initialState.filterBy,
         filterValue: initialState.filterValue,
       };
-    case 'SET_ISSUE_TYPE_FILTERS':
+    case 'SET_ACTION_TYPE_FILTER':
       return {
         ...state,
-        filters: payload,
+        actionTypes: payload,
       };
     case 'SET_SDG_FILTERS':
       return {

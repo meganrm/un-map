@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import mapboxgl from 'mapbox-gl';
 
 import {
-  getVisbleEvents,
+  getVisibleEvents,
   getColorMap,
   getEvents,
   getFilteredEvents,
@@ -21,7 +21,7 @@ import {
   getRefCode,
   getFilterBy,
   getFilterValue,
-  getFilters,
+  getActionTypes,
 } from '../state/selections/selectors';
 import * as selectionActions from '../state/selections/actions';
 
@@ -38,7 +38,7 @@ class EventsDashboard extends React.Component {
     this.renderMap = this.renderMap.bind(this);
 
     this.state = {
-      init: false,
+      init: true,
     };
   }
 
@@ -53,16 +53,16 @@ class EventsDashboard extends React.Component {
     if (document.location.search) {
       setRefCode(document.location.search);
     }
-    // getInitialEvents()
-    //   .then((returned) => {
-    //     if (this.state.issueFilter) {
-    //       this.props.setFilters(this.state.issueFilter);
-    //       this.setState({ issueFilter: null });
-    //     } else {
-    //       this.props.setInitialFilters(returned);
-    //     }
-    //     this.setState({ init: false });
-    //   });
+    getInitialEvents()
+      .then((returned) => {
+        // if (this.state.issueFilter) {
+        //   this.props.setFilters(this.state.issueFilter);
+        //   this.setState({ issueFilter: null });
+        // } else {
+        //   this.props.setInitialFilters(returned);
+        // }
+        this.setState({ init: false });
+      });
   }
 
   renderTotal(items) {
@@ -88,23 +88,22 @@ class EventsDashboard extends React.Component {
       filterBy,
       filterValue,
       searchByDistrict,
-      filteredEvents,
+      visibleEvents,
       searchByQueryString,
       onColorMapUpdate,
     } = this.props;
 
 
     if (!mapboxgl.supported()) {
-      return (<WebGlError mapType="event" />);
+      return (<WebGlError />);
     }
     return (<MapView
-      items={filteredEvents}
+      items={visibleEvents}
       center={center}
       selectedUsState={selectedUsState}
       colorMap={colorMap}
       onColorMapUpdate={onColorMapUpdate}
       district={district}
-      type="events"
       filterByValue={{ [filterBy]: [filterValue] }}
       resetSelections={resetSelections}
       searchByDistrict={searchByDistrict}
@@ -130,11 +129,10 @@ class EventsDashboard extends React.Component {
       return null;
     }
 
-
     return (
       <div className="events-container main-container">
         <h2 className="dash-title">Event Dashboard</h2>
-        <SearchBar items={visibleEvents} mapType="event" />
+        <SearchBar items={visibleEvents} />
         <div className="map-and-events-container">
           <SideBar
             renderTotal={this.renderTotal}
@@ -165,9 +163,9 @@ const mapStateToProps = state => ({
   filterBy: getFilterBy(state),
   filterValue: getFilterValue(state),
   filteredEvents: getFilteredEvents(state),
-  issueFilters: getFilters(state),
+  issueFilters: getActionTypes(state),
   refcode: getRefCode(state),
-  visibleEvents: getVisbleEvents(state),
+  visibleEvents: getVisibleEvents(state),
 });
 
 const mapDispatchToProps = dispatch => ({

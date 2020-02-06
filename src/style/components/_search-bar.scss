@@ -9,8 +9,8 @@
 
   .button-wrapper {
     .ant-btn {
-      height: 80px;
-      width: 80px;
+      height: 120px;
+      width: 120px;
       background-size: contain;
       margin: 10px;
     }
@@ -192,53 +192,49 @@ select {
 }
 
 .ant-tag-checkable-checked {
-  &.town-hall-icon {
-    background-color: $town-hall;
-  }
+  // &.action-01 {
+  //   background-color: $action-01;
+  // }
 
-  &.general-icon {
-    background-color: $general;
-  }
+  // &.general-icon {
+  //   background-color: $general;
+  // }
 
-  &.other-icon {
-    background-color: $other;
-  }
+  // &.gun-violence-icon {
+  //   background-color: $gun-violence;
+  // }
 
-  &.gun-violence-icon {
-    background-color: $gun-violence;
-  }
+  // &.foreign-policy-icon {
+  //   background-color: $foreign-policy;
+  // }
 
-  &.foreign-policy-icon {
-    background-color: $foreign-policy;
-  }
+  // &.infrastructure-icon {
+  //   background-color: $infrastructure;
+  // }
 
-  &.infrastructure-icon {
-    background-color: $infrastructure;
-  }
+  // &.trump-tax-scam-icon {
+  //   background-color: $trump-tax-scam;
+  // }
 
-  &.trump-tax-scam-icon {
-    background-color: $trump-tax-scam;
-  }
+  // &.dream-act-icon {
+  //   background-color: $dream-act;
+  // }
 
-  &.dream-act-icon {
-    background-color: $dream-act;
-  }
+  // &.electoral-icon {
+  //   background-color: $electoral;
+  // }
 
-  &.electoral-icon {
-    background-color: $electoral;
-  }
+  // &.dark-green {
+  //   background-color: $dark-green;
+  // }
 
-  &.dark-green {
-    background-color: $dark-green;
-  }
+  // &.dark-purple {
+  //   background-color: $dark-purple;
+  // }
 
-  &.dark-purple {
-    background-color: $dark-purple;
-  }
-
-  &.dark-orange {
-    background-color: $dark-orange;
-  }
+  // &.dark-orange {
+  //   background-color: $dark-orange;
+  // }
 
   &.circle-stroked-15-grey {
     background-color: $brand-primary;

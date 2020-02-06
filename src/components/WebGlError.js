@@ -1,5 +1,4 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Alert } from 'antd';
 /* eslint-disable */
 require('style-loader!css-loader!antd/es/alert/style/index.css');
@@ -7,10 +6,9 @@ require('style-loader!css-loader!antd/es/alert/style/index.css');
 
 class WebGlError extends React.Component {
   render() {
-    const { mapType } = this.props;
     return (
       <Alert
-        message={`This map requires webGL to run and you do not currenlty have it enabled, but you can still search for ${mapType}s near you.`}
+        message={`This map requires webGL to run and you do not currenlty have it enabled, but you can still search for events near you.`}
         type="warning"
         closable
         showIcon
@@ -20,8 +18,5 @@ class WebGlError extends React.Component {
   }
 }
 
-WebGlError.propTypes = {
-  mapType: PropTypes.string.isRequired,
-};
 
 export default WebGlError;

@@ -3,25 +3,13 @@ import { Tag } from 'antd';
 import { find, without } from 'lodash';
 import PropTypes from 'prop-types';
 
+import { ACTION_TYPES } from '../constants';
+
 const { CheckableTag } = Tag;
 
 /* eslint-disable */
 require('style-loader!css-loader!antd/es/tag/style/index.css');
 /* eslint-enable */
-
-const eventTypes = [{
-  number: '01',
-  title: 'raising public awareness',
-},
-{
-  number: '02',
-  title:
-  'conducting scientific research',
-},
-{ number: '03', title: 'taking action at work' },
-{ number: '04', title: 'taking action at home' },
-{ number: '05', title: 'giving financial resources' },
-{ number: '06', title: 'other' }];
 
 class IssueFilterTags extends React.Component {
 
@@ -45,7 +33,7 @@ class IssueFilterTags extends React.Component {
     return (
       <div>
         <h6 style={{ display: 'inline', marginRight: 8 }}>Filter by action type:</h6>
-        {eventTypes.map((tag) => {
+        {ACTION_TYPES.map((tag) => {
           const mapping = find(colorMap, { filterBy: tag });
           const color = mapping ? mapping.icon.toLowerCase() : 'circle-stroked-15-grey';
           return (

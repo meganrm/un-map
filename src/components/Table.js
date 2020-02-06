@@ -34,11 +34,9 @@ class Table extends React.Component {
     const {
       items,
       refcode,
-      type,
       selectItem,
     } = this.props;
-
-    if (items.length === 0 && type === 'events') {
+    if (items.length === 0) {
       return (
         <div id="events-list">
           <p className="no-results">Looks like there are no events near you right now.
@@ -49,7 +47,7 @@ class Table extends React.Component {
 
     return (
       <List
-        id={`${type}-list`}
+        id="event-list"
         itemLayout="vertical"
         dataSource={items}
         renderItem={item =>
@@ -59,7 +57,6 @@ class Table extends React.Component {
                 key={`${item.id}-cell`}
                 item={item}
                 refcode={refcode}
-                type={type}
                 color={this.getColor(item.issueFocus)}
                 iconName={this.getIconName(item.issueFocus)}
                 selectItem={selectItem}
@@ -76,7 +73,6 @@ Table.propTypes = {
   items: PropTypes.arrayOf(PropTypes.object).isRequired,
   refcode: PropTypes.string,
   selectItem: PropTypes.func,
-  type: PropTypes.string.isRequired,
 };
 
 Table.defaultProps = {

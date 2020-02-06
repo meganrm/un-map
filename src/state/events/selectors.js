@@ -9,44 +9,37 @@ import { computeDistanceBetween, LatLng } from 'spherical-geometry-js';
 import {
   getDistance,
   getLocation,
-  getFilterBy,
-  getFilterValue,
-  getFilters,
+  getActionTypes,
+  getSDGFilters,
 } from '../selections/selectors';
 
 export const getEvents = state => state.events.allEvents;
 export const getColorMap = state => state.events.filterColors;
 export const getCurrentIssueFocuses = createSelector([getEvents], events => uniqBy(events, 'issueFocus').map(item => item.issueFocus));
 
-const getEventsFilteredByKeywordArray = createSelector(
-  [getEvents, getFilters],
-  (allEvents, filterArray) => filter(allEvents, o => includes(filterArray, o.issueFocus)),
-);
-
 export const getFilteredEvents = createSelector(
   [
-    getEventsFilteredByKeywordArray,
-    getFilterBy,
-    getFilterValue,
+    getEvents,
+    getSDGFilters,
+    getActionTypes,
   ],
   (
     eventsFilteredByKeywords,
-    filterBy,
-    filterValue,
+    sdgFilters,
+    actionTypes,
   ) => {
-    if (!filterValue || filterBy === 'all') {
-      return eventsFilteredByKeywords;
+    let toReturn = eventsFilteredByKeywords;
+    if (sdgFilters && sdgFilters.length > 0 ) {
+      toReturn = toReturn.filter(currrentEvent => includes(sdgFilters, currrentEvent.category)).sort((a, b) => (a.timeStart < b.timeStart ? -1 : 1));
     }
-    return eventsFilteredByKeywords.filter((currrentEvent) => {
-      if (!currrentEvent[filterBy]) {
-        return false;
-      }
-      return currrentEvent[filterBy].toLowerCase().includes(filterValue.toLowerCase());
-    }).sort((a, b) => (a.starts_at < b.starts_at ? -1 : 1));
+    if (actionTypes && actionTypes.length > 0) {
+      toReturn = toReturn.filter(currrentEvent => includes(actionTypes, currrentEvent.category)).sort((a, b) => (a.timeStart < b.timeStart ? -1 : 1));
+    }
+    return toReturn;
   },
 );
 
-export const getVisbleEvents = createSelector(
+export const getVisibleEvents = createSelector(
   [
     getFilteredEvents,
     getDistance,

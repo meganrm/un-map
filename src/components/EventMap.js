@@ -28,6 +28,7 @@ class MapView extends React.Component {
   componentDidMount() {
     const { items } = this.props;
     const featuresHome = this.createFeatures(items);
+    console.log(featuresHome, items)
     this.initializeMap(featuresHome);
   }
 
@@ -115,6 +116,7 @@ class MapView extends React.Component {
       features: [],
       type: 'FeatureCollection',
     };
+    console.log('got features', items)
     featuresHome.features = items.map((indEvent) => {
       const colorObject = this.getColorForEvents(indEvent);
       const newFeature = new Point(colorObject);
@@ -261,7 +263,6 @@ class MapView extends React.Component {
   }
 
   initializeMap(featuresHome) {
-    const { type } = this.props;
 
     mapboxgl.accessToken =
          'pk.eyJ1IjoieHJnbG9iYWwiLCJhIjoiY2swdndhc205MTNucTNtcXY5bTd3cXg5bCJ9.0GHuJbhIE_SBKoSLoDlI0w';
@@ -280,15 +281,11 @@ class MapView extends React.Component {
     this.makeZoomToNationalButton();
     // map on 'load'
     this.map.on('load', () => {
-      if (type === 'events') {
-        this.addLayer(featuresHome);
-        this.addPopups('events-points');
-        this.addClickListener();
-        this.map.getSource('events-points').setData(featuresHome);
-      } else {
-        this.addPopups('unclustered-point');
-        this.clusterData(featuresHome);
-      }
+      this.addLayer(featuresHome);
+      this.addPopups('events-points');
+      this.addClickListener();
+      this.map.getSource('events-points').setData(featuresHome);
+
       this.handleReset();
     });
   }
@@ -313,7 +310,6 @@ MapView.propTypes = {
   resetSelections: PropTypes.func.isRequired,
   selectedItem: PropTypes.shape({}),
   setLatLng: PropTypes.func.isRequired,
-  type: PropTypes.string.isRequired,
 };
 
 MapView.defaultProps = {

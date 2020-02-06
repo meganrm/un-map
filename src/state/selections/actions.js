@@ -43,9 +43,9 @@ export const resetSearchByQueryString = () => ({
   type: 'RESET_SEARCH_BY_KEY_VALUE',
 });
 
-export const setIssueTypeFilters = payload => ({
+export const setActionTypeFilter = payload => ({
   payload,
-  type: 'SET_ISSUE_TYPE_FILTERS',
+  type: 'SET_ACTION_TYPE_FILTER',
 });
 
 export const setInitialFilters = payload => ({

@@ -1,30 +1,91 @@
 @import '../modules/utility';
+@import '../mixins/cell';
 
 .event-cell {
+  &.category-01 {
+    @include cell($category-01)
+  }
+
+  &.category-02 {
+    @include cell($category-02)
+  }
+
+  &.category-03 {
+    @include cell($category-03)
+  }
+
+  &.category-04 {
+    @include cell($category-04)
+  }
+  &.category-05 {
+    @include cell($category-05)
+  }
+  &.category-06 {
+    @include cell($category-06)
+  }
+  &.category-07 {
+    @include cell($category-07)
+  }
+  &.category-08 {
+    @include cell($category-08)
+  }
+  &.category-09 {
+    @include cell($category-09)
+  }
+  &.category-10 {
+    @include cell($category-10)
+  }
+  &.category-11 {
+    @include cell($category-11)
+  }
+  &.category-12 {
+    @include cell($category-12)
+  }
+  &.category-13 {
+    @include cell($category-13)
+  }
+  &.category-14 {
+    @include cell($category-14)
+  }
+  &.category-15 {
+    @include cell($category-15)
+  }
+  &.category-16 {
+    @include cell($category-16)
+  }
+  &.category-17 {
+    @include cell($category-17)
+  }
   ul {
     list-style-type: none;
   }
+
   .ant-card-cover {
     overflow: hidden;
-      img {
+
+    img {
       border-radius: 0;
       width: 100%;
     }
   }
-  .ant-card-body{
-    @include montserrat-regular;
+
+  .ant-card-body {
+    @include roboto-regular;
   }
+
   .read-more {
     transition: max-height 500ms ease-in-out;
     cursor: pointer;
     color: $brand-blue;
-    &.closed{
+
+    &.closed {
       max-height: 4em;
       text-overflow: ellipsis;
       overflow: hidden;
       white-space: nowrap;
     }
-    &.open{
+
+    &.open {
       max-height: 2000em;
 
     }
